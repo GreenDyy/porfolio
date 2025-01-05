@@ -1,7 +1,7 @@
-import TextComponent from './TextComponent'
-import SpaceComponent from './SpaceComponent'
+import Header from "./Header/Header"
+import Footer from "./Footer/Footer"
 
 export {
-   TextComponent,
-   SpaceComponent,
+   Header,
+   Footer
 }
