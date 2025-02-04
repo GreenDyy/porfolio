@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Home.scss'
 import { Button, Card, Col, Flex, Layout, Row, Space, Typography } from 'antd'
 import { Footer, Header } from '../../components'
@@ -10,13 +10,26 @@ import {
   LinkedinOutlined,
   YoutubeOutlined
 } from '@ant-design/icons'
-
+import { coreTechs, beAndDatabases, tools } from './initData'
 const { Title, Text, Link } = Typography
 
 function Home() {
+  const [dataCoreTechs, setDataCoreTechs] = useState(coreTechs)
+  const [dataBeAndDatabases, setDataBeAndDatabases] = useState(beAndDatabases)
+  const [dataTools, setDataTools] = useState(tools)
+
+  // useEffect(() => { 
+  //   setDataCoreTechs(coreTechs)
+  //   setDataBeAndDatabases(beAndDatabases)
+  //   setDataTools(tools)
+  // }, [])
+
+
   return (
     <Layout style={{ background: "black", color: "white" }}>
       {/* <Header /> */}
+
+
 
       <Layout.Content className='container' style={{ minHeight: "100vh" }}>
         <Flex vertical justify='center' align='center'>
@@ -55,76 +68,135 @@ function Home() {
             </Space>
           </Flex>
 
-          {/* Skills & Expertise */}
+          {/* II. Skills & Expertise */}
           <Flex
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'left' }}>
+            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
               Skills & Expertise
             </Title>
 
-            <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
-              {/* Row 1 */}
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Frontend</Title>
-                  <Text style={{ color: '#999' }}>React, Vue, Angular</Text>
-                </Card>
-              </Col>
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Backend</Title>
-                  <Text style={{ color: '#999' }}>Node.js, Python, Java</Text>
-                </Card>
-              </Col>
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Database</Title>
-                  <Text style={{ color: '#999' }}>MongoDB, MySQL, PostgreSQL</Text>
-                </Card>
-              </Col>
+            {/* Core Technologies */}
+            <Flex
+              vertical
+            >
+              <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
+                Core Technologies
+              </Title>
+              <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
+                {/* Row 1 */}
+                {dataCoreTechs?.map((item, index) => {
+                  let icon = null;
+                  //xử lý icon
+                  if (item.pathIcon) {
+                    icon = <img src={item.pathIcon} alt={item.name} style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
+                  }
+                  else {
+                    if (item.icon) {
+                      icon = item.icon
+                    }
+                    else {
+                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                    }
+                  }
+                  return (
+                    <Col xs={24} sm={12} md={8} key={index}>
+                      <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
+                        <Flex gap={20} align="center">
+                          {icon}
+                          <Flex vertical>
+                            <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item.name}</Title>
+                            <Text style={{ color: '#999' }}>{item.experience}</Text>
+                          </Flex>
+                        </Flex>
+                      </Card>
+                    </Col>
+                  )
+                })}
+              </Row>
+            </Flex>
+            {/* Backend & Database */}
+            <Flex
+              vertical
+            >
+              <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
+                Backend & Database
+              </Title>
+              <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
+                {dataBeAndDatabases?.map((item, index) => {
+                  let icon = null;
+                  //xử lý icon
+                  if (item.pathIcon) {
+                    icon = <img src={item.pathIcon} alt={item.name} style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
+                  }
+                  else {
+                    if (item.icon) {
+                      icon = item.icon
+                    }
+                    else {
+                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                    }
+                  }
+                  return (
+                    <Col xs={24} sm={12} md={8} key={index}>
+                      <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
+                        <Flex gap={20}>
+                          {icon}
+                          <Flex vertical>
+                            <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item?.name}</Title>
+                            <Text style={{ color: '#999' }}>3 months</Text>
 
-              {/* Row 2 */}
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Mobile</Title>
-                  <Text style={{ color: '#999' }}>React Native, Flutter</Text>
-                </Card>
-              </Col>
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>DevOps</Title>
-                  <Text style={{ color: '#999' }}>Docker, Kubernetes, AWS</Text>
-                </Card>
-              </Col>
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Testing</Title>
-                  <Text style={{ color: '#999' }}>Jest, Cypress, Selenium</Text>
-                </Card>
-              </Col>
+                            {/* <Text style={{ color: '#999' }}>3 months</Text> */}
+                          </Flex>
+                        </Flex>
+                      </Card>
+                    </Col>
+                  )
+                })}
+              </Row>
+            </Flex>
+            {/* Tools & DevOps */}
+            <Flex
+              vertical
+            >
+              <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
+                Tools & DevOps
+              </Title>
+              <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
+                {dataTools?.map((item, index) => {
+                  let icon = null;
+                  //xử lý icon
+                  if (item.pathIcon) {
+                    icon = <img src={item.pathIcon} alt={item.name} style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
+                  }
+                  else {
+                    if (item.icon) {
+                      icon = item.icon
+                    }
+                    else {
+                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                    }
+                  }
+                  return (
+                    <Col xs={24} sm={12} md={8} key={index}>
+                      <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
+                        <Flex gap={20}>
+                          {icon}
+                          <Flex vertical>
+                            <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item?.name}</Title>
+                            <Text style={{ color: '#999' }}>3 months</Text>
 
-              {/* Row 3 */}
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>UI/UX</Title>
-                  <Text style={{ color: '#999' }}>Figma, Adobe XD</Text>
-                </Card>
-              </Col>
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Version Control</Title>
-                  <Text style={{ color: '#999' }}>Git, GitHub, GitLab</Text>
-                </Card>
-              </Col>
-              <Col xs={24} sm={12} md={8}>
-                <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>Other Tools</Title>
-                  <Text style={{ color: '#999' }}>VS Code, Postman, Jira</Text>
-                </Card>
-              </Col>
-            </Row>
+                            {/* <Text style={{ color: '#999' }}>3 months</Text> */}
+                          </Flex>
+                        </Flex>
+                      </Card>
+                    </Col>
+                  )
+                })}
+              </Row>
+            </Flex>
+
           </Flex>
         </Flex>
       </Layout.Content>
