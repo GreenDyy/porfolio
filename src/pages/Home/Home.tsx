@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './Home.scss'
-import { Button, Card, Col, Flex, Layout, Row, Space, Typography } from 'antd'
+import { Button, Card, Col, Flex, Input, Layout, Row, Space, Typography } from 'antd'
 import { Footer, Header } from '../../components'
 import { blue, green } from '@ant-design/colors'
 import {
@@ -11,6 +11,8 @@ import {
   YoutubeOutlined
 } from '@ant-design/icons'
 import { coreTechs, beAndDatabases, tools } from './initData'
+import { useNavigate } from 'react-router-dom'
+import AuthContext from '../../contexts/AuthContext'
 const { Title, Text, Link } = Typography
 
 function Home() {
@@ -18,12 +20,17 @@ function Home() {
   const [dataBeAndDatabases, setDataBeAndDatabases] = useState(beAndDatabases)
   const [dataTools, setDataTools] = useState(tools)
 
+  const [counter, setCounter] = useState(0)
+
+  const navigate = useNavigate()
+
   // useEffect(() => { 
   //   setDataCoreTechs(coreTechs)
   //   setDataBeAndDatabases(beAndDatabases)
   //   setDataTools(tools)
   // }, [])
 
+  const { name, setNameCustomer, setName } = useContext(AuthContext)
 
   return (
     <Layout style={{ background: "black", color: "white" }}>
@@ -41,6 +48,24 @@ function Home() {
             <Title style={{ color: green[6] }}>
               My name is Huynh Khanh Duy
             </Title>
+
+            <Input
+              placeholder='Nhập tên của bạn'
+              onChange={(e) => {
+                setNameCustomer(e.target.value)
+              }}
+            />
+
+            <Button
+              type='default'
+              onClick={() => {
+                // setNameCustomer('Duy')
+                navigate('/test')
+              }}
+            >
+              Đếm
+            </Button>
+
             <Text style={{ color: 'white', fontSize: '24px' }}>
               "I'm a developer who likes to do different and cool things, learn from great people"
             </Text>
