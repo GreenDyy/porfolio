@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/porfolio/static/css/main.f37d76e6.css",
+    "main.js": "/porfolio/static/js/main.251107eb.js",
+    "static/js/453.6703cfa4.chunk.js": "/porfolio/static/js/453.6703cfa4.chunk.js",
+    "static/media/react-native.svg": "/porfolio/static/media/react-native.de5e122ef5339c00a56cac6a3d059245.svg",
+    "static/media/mongodb.svg": "/porfolio/static/media/mongodb.65cd0cbff6fe3e6539854b96c4560945.svg",
+    "static/media/aspnet.svg": "/porfolio/static/media/aspnet.301e6d7965a2b5c9d01ad9dc04015f18.svg",
+    "static/media/react.svg": "/porfolio/static/media/react.f88b87b82872862dec11bfea8e896f5b.svg",
+    "static/media/csharp.svg": "/porfolio/static/media/csharp.93ba21ebf5c7f4e5fb94538c4c948fec.svg",
+    "static/media/postman.svg": "/porfolio/static/media/postman.e901ff748f89df47af5769dd9e812ede.svg",
+    "static/media/powerpoint.svg": "/porfolio/static/media/powerpoint.abba61a521c8d3a6dc2b6d8b64fe7d34.svg",
+    "static/media/word.svg": "/porfolio/static/media/word.9581b24bdfee8e47269d0be2854aa6f0.svg",
+    "static/media/excel.svg": "/porfolio/static/media/excel.4ec1a9d5f045bcfac05efdfc0127d980.svg",
+    "static/media/sourcetree.svg": "/porfolio/static/media/sourcetree.efdbbacfa43ef3dff360f5e1e1c4b0f7.svg",
+    "static/media/typescript.svg": "/porfolio/static/media/typescript.f59b0ca90862bb487ea70d054135f09f.svg",
+    "static/media/nodejs.svg": "/porfolio/static/media/nodejs.d34a558d8c3f792388e6383c54a44835.svg",
+    "static/media/git.svg": "/porfolio/static/media/git.70f099170f46f760e5d9f09849c589b6.svg",
+    "static/media/gitlab.svg": "/porfolio/static/media/gitlab.fe53625cd2e37883b8f56fa3da3e64f5.svg",
+    "static/media/sql.svg": "/porfolio/static/media/sql.81c1f0f128ab11f35e3efa25d92da0d5.svg",
+    "static/media/github.svg": "/porfolio/static/media/github.cf3c708621b7a00e1d3c9e9782f1fc98.svg",
+    "index.html": "/porfolio/index.html",
+    "static/media/figma.svg": "/porfolio/static/media/figma.aa8b47f4f6e0492ecbf8bd8df5f2243f.svg",
+    "static/media/javascript.svg": "/porfolio/static/media/javascript.4e191ced82f7d9fb6e572e1600298643.svg",
+    "main.f37d76e6.css.map": "/porfolio/static/css/main.f37d76e6.css.map",
+    "main.251107eb.js.map": "/porfolio/static/js/main.251107eb.js.map",
+    "453.6703cfa4.chunk.js.map": "/porfolio/static/js/453.6703cfa4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f37d76e6.css",
+    "static/js/main.251107eb.js"
+  ]
+}
