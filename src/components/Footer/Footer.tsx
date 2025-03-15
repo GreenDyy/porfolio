@@ -33,7 +33,7 @@ function Footer() {
                         <ul>
                             <li>Email: contact@example.com</li>
                             <li>Điện thoại: (84) 123-456-789</li>
-                            <li>Địa chỉ: Hà Nội, Việt Nam</li>
+                            <li>Địa chỉ: TP HCM, Việt Nam</li>
                         </ul>
                     </div>
                 </Col>
