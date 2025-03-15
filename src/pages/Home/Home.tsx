@@ -8,20 +8,9 @@ import {
   FacebookOutlined,
   InstagramOutlined,
   LinkedinOutlined,
-  YoutubeOutlined,
-  CustomerServiceFilled,
-  FireFilled,
-  ToolOutlined,
-  ToolTwoTone,
-  ToolFilled,
-  DatabaseFilled,
-  GlobalOutlined,
-  TrophyOutlined
+  YoutubeOutlined
 } from '@ant-design/icons'
-
 import { coreTechs, beAndDatabases, tools } from './initData'
-import { university } from './text'
-
 const { Title, Text, Link } = Typography
 
 function Home() {
@@ -40,7 +29,9 @@ function Home() {
     <Layout style={{ background: "black", color: "white" }}>
       {/* <Header /> */}
 
-      <Layout.Content className='container' >
+
+
+      <Layout.Content className='container' style={{ minHeight: "100vh" }}>
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
@@ -91,11 +82,9 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                {/* <span style={{ color: green[6], marginRight: 10 }}>|</span> Core Technologies */}
-                <FireFilled style={{ color: green[6], marginRight: 8 }} />
                 Core Technologies
               </Title>
-              <Row gutter={[24, 24]}>
+              <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
                 {/* Row 1 */}
                 {dataCoreTechs?.map((item, index) => {
                   let icon = null;
@@ -112,7 +101,7 @@ function Home() {
                     }
                   }
                   return (
-                    <Col xs={24} sm={12} md={8} key={index} style={{ textAlign: 'left' }}>
+                    <Col xs={24} sm={12} md={8} key={index}>
                       <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
                         <Flex gap={20} align="center">
                           {icon}
@@ -132,10 +121,9 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <DatabaseFilled style={{ color: green[6], marginRight: 8 }} />
                 Backend & Database
               </Title>
-              <Row gutter={[24, 24]}>
+              <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
                 {dataBeAndDatabases?.map((item, index) => {
                   let icon = null;
                   //xử lý icon
@@ -151,7 +139,7 @@ function Home() {
                     }
                   }
                   return (
-                    <Col xs={24} sm={12} md={8} key={index} style={{ textAlign: 'left' }}>
+                    <Col xs={24} sm={12} md={8} key={index}>
                       <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
                         <Flex gap={20}>
                           {icon}
@@ -173,10 +161,9 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <ToolFilled style={{ color: green[6], marginRight: 8 }} />
                 Tools & DevOps
               </Title>
-              <Row gutter={[24, 24]}>
+              <Row gutter={[24, 24]} style={{ textAlign: 'left' }}>
                 {dataTools?.map((item, index) => {
                   let icon = null;
                   //xử lý icon
@@ -192,7 +179,7 @@ function Home() {
                     }
                   }
                   return (
-                    <Col xs={24} sm={12} md={8} key={index} style={{ textAlign: 'left' }}>
+                    <Col xs={24} sm={12} md={8} key={index}>
                       <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
                         <Flex gap={20}>
                           {icon}
@@ -211,110 +198,11 @@ function Home() {
             </Flex>
 
           </Flex>
-          {/* III. Education */}
-          <Flex
-            vertical
-            style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
-          >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
-              Education
-            </Title>
-
-            <Card
-              style={{ textAlign: 'left', background: '#1e1e1e', border: '1px solid #333' }}
-            >
-              <Title level={4} style={{ marginTop: 0, color: 'white' }}>{university.name}</Title>
-
-              <Title level={4} style={{ color: green[6] }}>{university.degree}</Title>
-              <Text style={{ color: '#A6A6A6', display: 'block', marginBottom: 10 }}>{university.duration}</Text>
-
-              <Text style={{ color: '#A6A6A6', display: 'block' }}>{university.description}</Text>
-            </Card>
-          </Flex>
-
-          {/* IV. Languages */}
-          <Flex
-            vertical
-            style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
-          >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
-              Languages
-            </Title>
-
-            <Row gutter={[24, 24]} justify="center">
-              <Col xs={24} sm={12} style={{ display: 'flex' }}>
-                <Card style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}>
-                  <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
-                    <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
-                      <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>Vietnamese</Title>
-                      <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Native Proficiency</Text>
-                      <Text style={{ color: '#A6A6A6', fontSize: 12 }}>Native speaker with complete fluency in reading, writing, and speaking. Deep understanding of cultural nuances and business communication.</Text>
-                    </Flex>
-                  </Flex>
-                </Card>
-              </Col>
-
-              <Col xs={24} sm={12} style={{ display: 'flex' }}>
-                <Card style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}>
-                  <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
-                    <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
-                      <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>English</Title>
-                      <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Professional Proficiency</Text>
-                      <Text style={{ color: '#A6A6A6', fontSize: 12 }}>Strong command of English in professional settings. Proficient in business communication, technical documentation, and daily conversation.</Text>
-                    </Flex>
-                  </Flex>
-                </Card>
-              </Col>
-            </Row>
-          </Flex>
-
-          {/* V. Certifications & Awards */}
-          <Flex
-            vertical
-            style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
-          >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
-              Certifications & Awards
-            </Title>
-
-            <Row gutter={[24, 24]} justify="center">
-              <Col xs={24} sm={12} style={{ display: 'flex' }}>
-                <Card style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}>
-                  <Flex align='center' gap={16}>
-                    <TrophyOutlined style={{ fontSize: 32, color: green[6] }} />
-                    <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
-                      <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>TOEIC 545</Title>
-                      <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Educational Testing Service (ETS)</Text>
-                      <Text style={{ color: '#A6A6A6', fontSize: 12 }}>Issue January 2025 • No Expiration Date</Text>
-                    </Flex>
-                  </Flex>
-                </Card>
-              </Col>
-            </Row>
-          </Flex>
-
-          <Space style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '40px 0' }}>
-            <Link href="https://github.com/GreenDyy" target="_blank">
-              <GithubOutlined style={{ fontSize: 32, color: '#A6A6A6', marginRight: 24, transition: 'color 0.3s' }} className="social-icon" />
-            </Link>
-            <Link href="https://www.facebook.com/greendyy" target="_blank">
-              <FacebookOutlined style={{ fontSize: 32, color: '#A6A6A6', marginRight: 24, transition: 'color 0.3s' }} className="social-icon" />
-            </Link>
-            <Link href="https://linkedin.com" target="_blank">
-              <LinkedinOutlined style={{ fontSize: 32, color: '#A6A6A6', marginRight: 24, transition: 'color 0.3s' }} className="social-icon" />
-            </Link>
-            <Link href="https://www.youtube.com/channel/UCvmIHpWJ5HFjA3qqOIXaM7A" target="_blank">
-              <YoutubeOutlined style={{ fontSize: 32, color: '#A6A6A6', transition: 'color 0.3s' }} className="social-icon" />
-            </Link>
-          </Space>
-
         </Flex>
       </Layout.Content>
 
       {/* <Footer /> */}
-    </Layout >
+    </Layout>
   )
 }
 
