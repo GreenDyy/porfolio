@@ -50,7 +50,7 @@ function Home() {
             <Title style={{ color: green[6] }}>
               {'My name is Huynh Khanh Duy (GreenD)'}
             </Title>
-            <Text style={{ color: 'white', fontSize: '24px' }}>
+            <Text style={{ color: 'white', fontSize: '24px', fontWeight: '500' }}>
               I'm a developer who likes to do different and cool things, learn from great people 😉. Oh, and I really like the color green!🍀
             </Text>
             {/* here */}
