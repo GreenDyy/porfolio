@@ -45,14 +45,15 @@ function Home() {
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
             <Title style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
-              Hello
+              Hii!
             </Title>
             <Title style={{ color: green[6] }}>
-              My name is Huynh Khanh Duy
+              {'My name is Huynh Khanh Duy (GreenD)'}
             </Title>
             <Text style={{ color: 'white', fontSize: '24px' }}>
-              ""I'm a developer who likes to do different and cool things, learn from great people 😉. Oh, and I really like the color green!🍀"
+              I'm a developer who likes to do different and cool things, learn from great people 😉. Oh, and I really like the color green!🍀
             </Text>
+            {/* here */}
             <Space size={'large'} style={{ marginTop: 20 }}>
               <Button
                 type="text"
@@ -113,7 +114,10 @@ function Home() {
                   }
                   return (
                     <Col xs={24} sm={12} md={8} key={index} style={{ textAlign: 'left' }}>
-                      <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
+                      <Card
+                        hoverable
+                        className="card-custom"
+                      >
                         <Flex gap={20} align="center">
                           {icon}
                           <Flex vertical>
@@ -152,7 +156,10 @@ function Home() {
                   }
                   return (
                     <Col xs={24} sm={12} md={8} key={index} style={{ textAlign: 'left' }}>
-                      <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
+                      <Card
+                        hoverable
+                        className="card-custom"
+                      >
                         <Flex gap={20}>
                           {icon}
                           <Flex vertical>
@@ -193,7 +200,10 @@ function Home() {
                   }
                   return (
                     <Col xs={24} sm={12} md={8} key={index} style={{ textAlign: 'left' }}>
-                      <Card hoverable style={{ background: '#1a1a1a', border: '1px solid #333' }}>
+                      <Card
+                        hoverable
+                        className="card-custom"
+                      >
                         <Flex gap={20}>
                           {icon}
                           <Flex vertical>
@@ -243,7 +253,9 @@ function Home() {
 
             <Row gutter={[24, 24]} justify="center">
               <Col xs={24} sm={12} style={{ display: 'flex' }}>
-                <Card style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}>
+                <Card
+                  style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
+                >
                   <Flex align="center" gap={16}>
                     <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
@@ -256,7 +268,9 @@ function Home() {
               </Col>
 
               <Col xs={24} sm={12} style={{ display: 'flex' }}>
-                <Card style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}>
+                <Card
+                  style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
+                >
                   <Flex align="center" gap={16}>
                     <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
@@ -281,7 +295,9 @@ function Home() {
 
             <Row gutter={[24, 24]} justify="center">
               <Col xs={24} sm={12} style={{ display: 'flex' }}>
-                <Card style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}>
+                <Card
+                  style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
+                >
                   <Flex align='center' gap={16}>
                     <TrophyOutlined style={{ fontSize: 32, color: green[6] }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>

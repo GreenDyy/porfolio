@@ -12,3 +12,21 @@
     }
 }
 
+.card-custom {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px);
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(46, 229, 157, 0.4),
+            0 0 15px rgba(46, 229, 157, 0.3),
+            0 0 30px rgba(46, 229, 157, 0.2);
+        border-color: #52c41a !important;
+
+        .ant-typography {
+            color: #52c41a !important;
+        }
+    }
+}
