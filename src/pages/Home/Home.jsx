@@ -37,10 +37,14 @@ function Home() {
 
 
   return (
-    <Layout style={{ background: "black", color: "white" }}>
+    <Layout style={{ background: "black", color: "white", overflow: 'hidden' }}>
       {/* <Header /> */}
 
-      <Layout.Content className='container' >
+      <Layout.Content className='container' style={{
+     
+        width: '100%',
+        maxWidth: '100%'
+      }}>
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
