@@ -16,39 +16,44 @@ import { ReactComponent as PostmanIcon } from '../../assets/icons/postman.svg';
 import { ReactComponent as ExcellIcon } from '../../assets/icons/excel.svg';
 import { ReactComponent as PowerPointIcon } from '../../assets/icons/powerpoint.svg';
 import { ReactComponent as WordIcon } from '../../assets/icons/word.svg';
+import dayjs from 'dayjs';
 
 //link icon nè: https://iconduck.com/icons
+// Expert: Chuyên gia
+// Advanced: Nâng cao
+// Intermediate: Trung cấp
+// Beginner: Mới bắt đầu
 
 const coreTechs = [
     {
         name: 'React JS',
         icon: <ReactIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2020-04-01'),
+        experience: 'Advanced'
     },
     {
         name: 'React Native',
         icon: <ReactNativeIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
-
-
+        startDate: dayjs('2021-01-01'),
+        experience: 'Intermediate'
     },
     {
         name: 'C#',
         icon: <CsharpIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
-
+        startDate: dayjs('2020-01-01'),
+        experience: 'Intermediate'
     },
     {
         name: 'JavaScript',
         icon: <JavascriptIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2019-06-01'),
+        experience: 'Advanced'
     },
-
     {
         name: 'TypeScript',
         icon: <TypescriptIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
-
+        startDate: dayjs('2021-03-01'),
+        experience: 'Advanced'
     },
 ];
 
@@ -56,93 +61,85 @@ const beAndDatabases = [
     {
         name: 'Node.js',
         icon: <NodejsIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
-
+        startDate: dayjs('2020-06-01'),
+        experience: 'Intermediate'
     },
     {
         name: 'ASP.NET Core Web API',
         icon: <ASPNETIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
-
+        startDate: dayjs('2020-01-01'),
+        experience: 'Advanced'
     },
     {
         name: 'MongoDB',
         icon: <MongodbIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2020-06-01'),
+        experience: 'Intermediate'
     },
-
-
     {
         name: 'SQL Server',
         icon: <SqlserverIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2020-01-01'),
+        experience: 'Advanced'
     },
-
-
-
 ];
 
 const tools = [
     {
         name: 'Git',
         icon: <GitIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
-
+        startDate: dayjs('2020-01-01'),
+        experience: 'Advanced'
     },
     {
         name: 'GitHub',
         icon: <GithubIcon style={{ width: '40px', height: '40px', stroke: 'white' }} />,
-        experience: '3 months',
+        startDate: dayjs('2020-01-01'),
+        experience: 'Advanced'
     },
-
     {
         name: 'GitLab',
         icon: <GitlabIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2021-01-01'),
+        experience: 'Advanced'
     },
-
-
     {
         name: 'SourceTree',
         icon: <SourceTreeIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2020-06-01'),
+        experience: 'Intermediate'
     },
-
-
     {
         name: 'Figma',
         icon: <FigmaIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2021-01-01'),
+        experience: 'Beginner'
     },
-
-
     {
         name: 'Postman',
         icon: <PostmanIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2020-06-01'),
+        experience: 'Intermediate'
     },
-
-
     {
         name: 'Word',
         icon: <WordIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2019-01-01'),
+        experience: 'Advanced'
     },
-
     {
         name: 'Excel',
         icon: <ExcellIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2019-01-01'),
+        experience: 'Intermediate'
     },
-
-
     {
         name: 'PowerPoint',
         icon: <PowerPointIcon style={{ fill: 'green', width: '40px', height: '40px' }} />,
-        experience: '3 months',
+        startDate: dayjs('2019-01-01'),
+        experience: 'Intermediate'
     },
-
-]
+];
 
 export { coreTechs, beAndDatabases, tools }
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './Home.scss'
-import { Button, Card, Col, Flex, Layout, Row, Space, Typography } from 'antd'
+import { Button, Card, Col, Flex, Layout, Row, Space, Tag, Typography } from 'antd'
 import { Footer, Header } from '../../components'
 import { blue, green } from '@ant-design/colors'
+import dayjs from 'dayjs'
 import {
   GithubOutlined,
   FacebookOutlined,
@@ -16,13 +17,30 @@ import {
   ToolFilled,
   DatabaseFilled,
   GlobalOutlined,
-  TrophyOutlined
+  TrophyOutlined,
+  TwitterOutlined
 } from '@ant-design/icons'
 
 import { coreTechs, beAndDatabases, tools } from './initData'
 import { university } from './text'
 
 const { Title, Text, Link } = Typography
+
+const handleColorExpericence = (experience) => {
+  const baseGreen = '#007c45';
+  switch (experience) {
+    case 'Expert':
+      return baseGreen;
+    case 'Advanced':
+      return '#19A974'; // Một tông xanh lá cây sáng hơn
+    case 'Intermediate':
+      return '#FFA500'; // Màu vàng nhạt, thể hiện mức độ trung bình
+    case 'Beginner':
+      return '#DC143C'; // Màu đỏ, thể hiện mức độ mới bắt đầu
+    default:
+      return '#808080'; // Màu xám cho trường hợp không xác định
+  }
+}
 
 function Home() {
   const [dataCoreTechs, setDataCoreTechs] = useState(coreTechs)
@@ -59,21 +77,26 @@ function Home() {
             </Text>
             {/* here */}
             <Space size={'large'} style={{ marginTop: 20 }}>
-              <Link href="https://github.com/GreenDyy" target="_blank">
-                <GithubOutlined style={{ fontSize: '30px', color: green[6] }} />
-              </Link>
-              <Link href="https://www.facebook.com/greendyy" target="_blank">
-                <FacebookOutlined style={{ fontSize: '30px', color: green[6] }} />
-              </Link>
-              <Link href="https://www.instagram.com/greendyy" target="_blank">
-                <InstagramOutlined style={{ fontSize: '30px', color: green[6] }} />
-              </Link>
-              <Link href="https://github.com/GreenDyy" target="_blank">
-                <LinkedinOutlined style={{ fontSize: '30px', color: green[6] }} />
-              </Link>
-              <Link href="https://www.youtube.com/channel/UCvmIHpWJ5HFjA3qqOIXaM7A" target="_blank">
-                <YoutubeOutlined style={{ fontSize: '30px', color: green[6] }} />
-              </Link>
+              <Button
+                type="text"
+                icon={<GithubOutlined style={{ fontSize: '30px', color: green[6] }} />}
+              />
+              <Button
+                type="text"
+                icon={<FacebookOutlined style={{ fontSize: '30px', color: green[6] }} />}
+              />
+              <Button
+                type="text"
+                icon={<InstagramOutlined style={{ fontSize: '30px', color: green[6] }} />}
+              />
+              <Button
+                type="text"
+                icon={<LinkedinOutlined style={{ fontSize: '30px', color: green[6] }} />}
+              />
+              <Button
+                type="text"
+                icon={<YoutubeOutlined style={{ fontSize: '30px', color: green[6] }} />}
+              />
             </Space>
           </Flex>
 
@@ -121,7 +144,16 @@ function Home() {
                           {icon}
                           <Flex vertical>
                             <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item.name}</Title>
-                            <Text style={{ color: '#999' }}>{item.experience}</Text>
+                            {/* <Text style={{ color: '#999' }}>{item.startDate ? (() => {
+                              const months = dayjs().diff(dayjs(item.startDate), 'month');
+                              if (months >= 12) {
+                                const years = Math.floor(months / 12);
+                                const remainingMonths = months % 12;
+                                return `${years} year${remainingMonths > 0 ? ` ${remainingMonths} month` : ''}`;
+                              }
+                              return `${months} month`;
+                            })() : 'No experience'}</Text> */}
+                            <Tag style={{ marginTop: 10 }} icon={<TwitterOutlined />} color={handleColorExpericence(item.experience)}>{item.experience}</Tag>
                           </Flex>
                         </Flex>
                       </Card>
@@ -159,13 +191,20 @@ function Home() {
                         hoverable
                         className="card-custom"
                       >
-                        <Flex gap={20} align='center'>
+                        <Flex gap={20}>
                           {icon}
                           <Flex vertical>
                             <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item?.name}</Title>
-                            <Text style={{ color: '#999' }}>{item.experience}</Text>
-
-                            {/* <Text style={{ color: '#999' }}>3 months</Text> */}
+                            {/* <Text style={{ color: '#999' }}>{item.startDate ? (() => {
+                              const months = dayjs().diff(dayjs(item.startDate), 'month');
+                              if (months >= 12) {
+                                const years = Math.floor(months / 12);
+                                const remainingMonths = months % 12;
+                                return `${years} year${remainingMonths > 0 ? ` ${remainingMonths} month` : ''}`;
+                              }
+                              return `${months} month`;
+                            })() : 'No experience'}</Text> */}
+                            <Tag style={{ marginTop: 10 }} icon={<TwitterOutlined />} color={handleColorExpericence(item.experience)}>{item.experience}</Tag>
                           </Flex>
                         </Flex>
                       </Card>
@@ -180,7 +219,7 @@ function Home() {
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
                 <ToolFilled style={{ color: green[6], marginRight: 8 }} />
-                Tools
+                Tools & DevOps
               </Title>
               <Row gutter={[24, 24]}>
                 {dataTools?.map((item, index) => {
@@ -203,11 +242,20 @@ function Home() {
                         hoverable
                         className="card-custom"
                       >
-                        <Flex gap={20} align='center'>
+                        <Flex gap={20}>
                           {icon}
                           <Flex vertical>
                             <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item?.name}</Title>
-                            <Text style={{ color: '#999' }}>{item.experience}</Text>
+                            {/* <Text style={{ color: '#999' }}>{item.startDate ? (() => {
+                              const months = dayjs().diff(dayjs(item.startDate), 'month');
+                              if (months >= 12) {
+                                const years = Math.floor(months / 12);
+                                const remainingMonths = months % 12;
+                                return `${years} year${remainingMonths > 0 ? ` ${remainingMonths} month` : ''}`;
+                              }
+                              return `${months} month`;
+                            })() : 'No experience'}</Text> */}
+                            <Tag style={{ marginTop: 10 }} icon={<TwitterOutlined />} color={handleColorExpericence(item.experience)}>{item.experience}</Tag>
                           </Flex>
                         </Flex>
                       </Card>
