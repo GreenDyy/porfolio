@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/colors": "^7.2.0",
     "@ant-design/icons": "^5.5.2",
+    "@react-spring/three": "^9.7.5",
     "@react-three/drei": "^10.0.4",
     "@react-three/fiber": "^9.1.0",
     "@testing-library/jest-dom": "^5.17.0",
