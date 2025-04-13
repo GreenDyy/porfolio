@@ -33,7 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "react-scripts start",
-    "master": "git checkout master && git merge dev && git checkout dev"
+    "master": "git checkout master && git merge dev -m 'Merge dev into master' && git push && git checkout dev"
   },
   "eslintConfig": {
     "extends": [
