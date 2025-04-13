@@ -6,7 +6,7 @@ Source: https://sketchfab.com/3d-models/model-inspector-demo-press-i-128d863ab5c
 Title: Model Inspector Demo (Press I)
 */
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 
@@ -17,37 +17,69 @@ import carScene from '../assets/3d/car.glb'
 function Car3D(props) {
     const { nodes, materials } = useGLTF(carScene)
     const carRef = useRef()
-    
+    const [isDragging, setIsDragging] = useState(false)
+    const [previousMousePosition, setPreviousMousePosition] = useState({ x: 0, y: 0 })
+    const { camera } = useThree()
+
     useFrame((state, delta) => {
-        if (carRef.current) {
+        if (carRef.current && !isDragging) {
             carRef.current.rotation.y += delta * 0.5 // Quay với tốc độ 0.5 radian mỗi giây
         }
     })
 
+    const handlePointerDown = (event) => {
+        setIsDragging(true)
+        setPreviousMousePosition({
+            x: event.clientX,
+            y: event.clientY
+        })
+    }
+
+    const handlePointerMove = (event) => {
+        if (!isDragging) return
+
+        const deltaX = event.clientX - previousMousePosition.x
+        const deltaY = event.clientY - previousMousePosition.y
+
+        if (carRef.current) {
+            carRef.current.rotation.y += deltaX * 0.01
+            carRef.current.rotation.x += deltaY * 0.01
+        }
+
+        setPreviousMousePosition({
+            x: event.clientX,
+            y: event.clientY
+        })
+    }
+
+    const handlePointerUp = () => {
+        setIsDragging(false)
+    }
+
     return (
-        <a.group ref={carRef} {...props} >
+        <a.group
+            ref={carRef}
+            {...props}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+            style={{ cursor: 'pointer' }}
+        >
             <group rotation={[-Math.PI / 2, 0, 0]} scale={0.004}>
                 <mesh
-
-
                     geometry={nodes.Object_2.geometry}
                     material={materials.Body_SG1}
                 />
                 <mesh
-
-
                     geometry={nodes.Object_3.geometry}
                     material={materials.Ground_SG}
                 />
                 <mesh
-
-
                     geometry={nodes.Object_4.geometry}
                     material={materials.Interior_SG}
                 />
                 <mesh
-
-
                     geometry={nodes.Object_5.geometry}
                     material={materials.Windows_SG}
                 />
