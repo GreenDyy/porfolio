@@ -10,36 +10,44 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 
-import { animated } from '@react-spring/three'
+import { a } from '@react-spring/three'
 
-import carScene from '../assets/model3d/car.glb'
+import carScene from '../assets/3d/car.glb'
 
 function Car3D(props) {
-    const { nodes, materials } = useGLTF('/car.glb')
+    const { nodes, materials } = useGLTF(carScene)
+    const carRef = useRef()
+    
+    useFrame((state, delta) => {
+        if (carRef.current) {
+            carRef.current.rotation.y += delta * 0.5 // Quay với tốc độ 0.5 radian mỗi giây
+        }
+    })
+
     return (
-        <a.group {...props} dispose={null}>
+        <a.group ref={carRef} {...props} >
             <group rotation={[-Math.PI / 2, 0, 0]} scale={0.004}>
                 <mesh
-                    castShadow
-                    receiveShadow
+
+
                     geometry={nodes.Object_2.geometry}
                     material={materials.Body_SG1}
                 />
                 <mesh
-                    castShadow
-                    receiveShadow
+
+
                     geometry={nodes.Object_3.geometry}
                     material={materials.Ground_SG}
                 />
                 <mesh
-                    castShadow
-                    receiveShadow
+
+
                     geometry={nodes.Object_4.geometry}
                     material={materials.Interior_SG}
                 />
                 <mesh
-                    castShadow
-                    receiveShadow
+
+
                     geometry={nodes.Object_5.geometry}
                     material={materials.Windows_SG}
                 />

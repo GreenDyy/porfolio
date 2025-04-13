@@ -21,6 +21,7 @@ import {
 
 import { coreTechs, beAndDatabases, tools } from './initData'
 import { university } from './text'
+import { useNavigate } from 'react-router-dom'
 
 const { Title, Text, Link } = Typography
 
@@ -28,6 +29,7 @@ function Home() {
   const [dataCoreTechs, setDataCoreTechs] = useState(coreTechs)
   const [dataBeAndDatabases, setDataBeAndDatabases] = useState(beAndDatabases)
   const [dataTools, setDataTools] = useState(tools)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setDataCoreTechs(coreTechs)
@@ -48,7 +50,7 @@ function Home() {
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
-            <Title style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
+            <Title onClick={() => navigate('/test')} style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
               Hii!
             </Title>
             <Title style={{ color: green[6] }}>
