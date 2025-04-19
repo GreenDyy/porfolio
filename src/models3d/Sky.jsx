@@ -7,7 +7,7 @@ const Sky = () => {
     const { scene, animations } = useGLTF(skyScene)
 
     return (
-        <mesh position={[-5,2, 1]} scale={1                                                                     }>
+        <mesh position={[0, 0, -1]} scale={[0.030, 0.030, 0.030]}>
             <primitive object={scene} />
         </mesh>
     )

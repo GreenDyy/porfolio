@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import Loader from '../../components/loader/Loader'
-import Car3D from '../../models3d/car'
+import Car3D from '../../models3d/Car'
 import SeeHouse3D from '../../models3d/SeeHouse'
 import './Test.scss'
 import { useNavigate } from 'react-router-dom'
@@ -11,6 +11,7 @@ import Header from '../../components/Header/Header'
 import { Button } from 'antd'
 
 const Test = () => {
+    const [isRotating, setIsRotating] = useState(false)
     const navigate = useNavigate()
     const adjustSeeHouseForScreenSize = () => {
         let screenScale = null
@@ -33,6 +34,7 @@ const Test = () => {
             <div className="test-container">
                 <Button style={{ cursor: 'pointer', margin: '20px', color: 'green' }} loading={true} onClick={() => navigate('/')}>Back home</Button>
                 <Canvas
+                    style={{ cursor: isRotating ? 'grabbing' : 'grab' }}
                     className='w-full h-full'
                     camera={{ near: 0.1, far: 100 }}
                     gl={{ preserveDrawingBuffer: true }}
@@ -42,7 +44,10 @@ const Test = () => {
                         <ambientLight intensity={4} />
                         <hemisphereLight intensity={1} groundColor="black" skyColor="green" />
                         <Sky />
-                        <Car3D />
+                        <Car3D
+                            isRotating={isRotating}
+                            setIsRotating={setIsRotating}
+                        />
                         {/* <SeeHouse3D
                         scale={screenScale}
                         position={screenPosition}

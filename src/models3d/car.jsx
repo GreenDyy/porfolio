@@ -6,7 +6,7 @@ Source: https://sketchfab.com/3d-models/model-inspector-demo-press-i-128d863ab5c
 Title: Model Inspector Demo (Press I)
 */
 
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 
@@ -18,52 +18,119 @@ function Car3D(props) {
     const { nodes, materials } = useGLTF(carScene)
     const carRef = useRef()
     const [isDragging, setIsDragging] = useState(false)
-    const [previousMousePosition, setPreviousMousePosition] = useState({ x: 0, y: 0 })
+    const lastX = useRef(0)
+    const lastY = useRef(0)
     const { camera } = useThree()
+    const rotationSpeed = useRef(0)
+    const dampingFactor = 0.95
+    const [keys, setKeys] = useState({
+        ArrowLeft: false,
+        ArrowRight: false,
+        ArrowUp: false,
+        ArrowDown: false
+    })
+
+    const handleKeyDown = (e) => {
+        if (keys.hasOwnProperty(e.key)) {
+            console.log('dang kich hoat handleKeyDown: ', e.key)
+            setKeys(prev => ({ ...prev, [e.key]: true }))
+        }
+    }
+
+    const handleKeyUp = (e) => {
+        if (keys.hasOwnProperty(e.key)) {
+            console.log('dang kich hoat handleKeyUp: ', e.key)
+            setKeys(prev => ({ ...prev, [e.key]: false }))
+        }
+    }
 
     useFrame((state, delta) => {
-        if (carRef.current && !isDragging) {
-            carRef.current.rotation.y += delta * 0.5 // Quay với tốc độ 0.5 radian mỗi giây
+        if (carRef.current) {
+            if (!isDragging) {
+                // Áp dụng hiệu ứng quay tiếp tục
+                carRef.current.rotation.y += rotationSpeed.current
+                // Giảm dần tốc độ quay
+                rotationSpeed.current *= dampingFactor
+                // Dừng quay khi tốc độ quá nhỏ
+                if (Math.abs(rotationSpeed.current) < 0.001) {
+                    rotationSpeed.current = 0
+                }
+            }
+
+            // Xử lý điều khiển bằng phím
+            if (keys.ArrowLeft) {
+                carRef.current.rotation.y += 0.02
+            }
+            if (keys.ArrowRight) {
+                carRef.current.rotation.y -= 0.02
+            }
+            if (keys.ArrowUp) {
+                carRef.current.rotation.x += 0.02
+            }
+            if (keys.ArrowDown) {
+                carRef.current.rotation.x -= 0.02
+            }
         }
     })
 
     const handlePointerDown = (event) => {
         setIsDragging(true)
-        setPreviousMousePosition({
-            x: event.clientX,
-            y: event.clientY
-        })
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX
+        const clientY = event.touches ? event.touches[0].clientY : event.clientY
+        lastX.current = clientX
+        lastY.current = clientY
+        // Reset rotation speed khi bắt đầu kéo mới
+        rotationSpeed.current = 0
     }
 
     const handlePointerMove = (event) => {
         if (!isDragging) return
 
-        const deltaX = event.clientX - previousMousePosition.x
-        const deltaY = event.clientY - previousMousePosition.y
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX
+        const clientY = event.touches ? event.touches[0].clientY : event.clientY
+        const deltaX = clientX - lastX.current
+        const deltaY = clientY - lastY.current
 
         if (carRef.current) {
             carRef.current.rotation.y += deltaX * 0.01
             carRef.current.rotation.x += deltaY * 0.01
+            // Cập nhật rotation speed dựa trên tốc độ kéo
+            rotationSpeed.current = deltaX * 0.01
         }
 
-        setPreviousMousePosition({
-            x: event.clientX,
-            y: event.clientY
-        })
+        lastX.current = clientX
+        lastY.current = clientY
     }
 
-    const handlePointerUp = () => {
+    const handlePointerUp = (e) => {
         setIsDragging(false)
+        e.stopPropagation()
     }
+
+    useEffect(() => {
+        document.addEventListener('pointerdown', handlePointerDown)
+        document.addEventListener('pointermove', handlePointerMove)
+        document.addEventListener('pointerup', handlePointerUp)
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('keyup', handleKeyUp)
+        return () => {
+            document.removeEventListener('pointerdown', handlePointerDown)
+            document.removeEventListener('pointermove', handlePointerMove)
+            document.removeEventListener('pointerup', handlePointerUp)
+            document.removeEventListener('keydown', handleKeyDown)
+            document.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [handlePointerDown, handlePointerMove, handlePointerUp, handleKeyDown, handleKeyUp])
+
 
     return (
         <a.group
             ref={carRef}
             {...props}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerLeave={handlePointerUp}
+            // onPointerDown={handlePointerDown}
+            // onPointerMove={handlePointerMove}
+            // onPointerUp={handlePointerUp}
+            // onPointerLeave={handlePointerUp}
             style={{ cursor: 'pointer' }}
         >
             <group rotation={[-Math.PI / 2, 0, 0]} scale={0.004}>
