@@ -69,10 +69,10 @@ const Test = () => {
         try {
             const res = await testMockData()
             console.log('mock_data_ne:', res)
-            Message.success('Lấy dữ liệu mock thành công', 50000)
+            Message.success('Lấy dữ liệu mock thành công', 3000)
             setDataSource(res?.data?.cats)
         } catch (error) {
-            Message.error('Lỗi khi lấy dữ liệu mock', 50000)
+            Message.error('Lỗi khi lấy dữ liệu mock', 3000)
             console.log('error:', error)
         } finally {
             setLoading(false)
