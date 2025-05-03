@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react'
+import React, { Suspense, useState, useEffect, useContext } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import Loader from '../../components/loader/Loader'
@@ -13,6 +13,7 @@ import { testMockData, testMockDataPostMethod } from '../Home/services'
 
 const Test = () => {
     const navigate = useNavigate()
+    const { name, setNameCustomer } = useContext(AuthContext)
     const [dataSource, setDataSource] = useState([])
     const [loading, setLoading] = useState(false)
     const adjustSeeHouseForScreenSize = () => {
@@ -30,7 +31,7 @@ const Test = () => {
     const columns = [
         {
             title: 'Id',
-            dataIndex: 'id', 
+            dataIndex: 'id',
             key: 'id'
         },
         {
@@ -67,39 +68,43 @@ const Test = () => {
             // const res = await testMockData()
             const res = await testMockDataPostMethod({ chatInput: 'Hello World' })
             console.log('mock_data_ne:', res)
-            message.success('Get mock data success')
+            Message.success('Lấy dữ liệu mock thành công', 3000)
             setDataSource(res?.data?.cats)
         } catch (error) {
-            message.error('Error when get mock data')
+            Message.error('Lỗi khi lấy dữ liệu mock', 3000)
             console.log('error:', error)
         } finally {
             setLoading(false)
         }
-
     }
 
     const { screenScale, screenPosition, rotation } = adjustSeeHouseForScreenSize()
-
     return (
         <>
             <Header />
             <div className="test-container">
+
                 <Button style={{ cursor: 'pointer', margin: '20px', color: 'green' }} onClick={() => testMockDataN8N()}>Test mock data</Button>
-                <Button style={{ cursor: 'pointer', margin: '20px', color: 'green' }} loading={true} onClick={() => navigate('/')}>Back home</Button>
-                <Table 
-                loading={loading}
-                 dataSource={dataSource}
-                  columns={columns}
-                  pagination={
-                    {
-                        pageSize: 10,
-                        total: dataSource.length,
-                        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-                        // showSizeChanger: true,
-                        // showQuickJumper: true,
+                <Button
+                    style={{ cursor: 'pointer', margin: '20px', color: 'green' }}
+                    onClick={() => navigate('/')}
+                >
+                    Back home
+                </Button>
+                <Table
+                    loading={loading}
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={
+                        {
+                            pageSize: 10,
+                            total: dataSource.length,
+                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                            // showSizeChanger: true,
+                            // showQuickJumper: true,
+                        }
                     }
-                  }
-                  />
+                />
                 <Canvas
                     className='w-full h-full'
                     camera={{ near: 0.1, far: 100 }}
