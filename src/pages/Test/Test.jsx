@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import Sky from '../../models3d/Sky'
 import Header from '../../components/Header/Header'
 import { Button, message, Table } from 'antd'
-import { testMockData } from '../Home/services'
+import { testMockData, testMockDataPostMethod } from '../Home/services'
 
 const Test = () => {
     const navigate = useNavigate()
@@ -64,7 +64,8 @@ const Test = () => {
         setDataSource([])
         setLoading(true)
         try {
-            const res = await testMockData()
+            // const res = await testMockData()
+            const res = await testMockDataPostMethod({ chatInput: 'Hello World' })
             console.log('mock_data_ne:', res)
             message.success('Get mock data success')
             setDataSource(res?.data?.cats)

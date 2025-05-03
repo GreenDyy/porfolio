@@ -30,3 +30,16 @@ export const testMockData = async () => {
     return res;
 }
 
+
+export const testMockDataPostMethod = async (data: any) => {
+    const res = await axios.post(
+        `https://n8n.naiscorp.com/webhook-test/mock/text`,
+        data,
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    return res;
+};
