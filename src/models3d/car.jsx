@@ -6,7 +6,7 @@ Source: https://sketchfab.com/3d-models/model-inspector-demo-press-i-128d863ab5c
 Title: Model Inspector Demo (Press I)
 */
 
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 
@@ -14,56 +14,123 @@ import { a } from '@react-spring/three'
 
 import carScene from '../assets/3d/car.glb'
 
-function Car3D(props) {
+const Car3D = (props) => {
+    const { isRotating, setIsRotating } = props
     const { nodes, materials } = useGLTF(carScene)
     const carRef = useRef()
-    const [isDragging, setIsDragging] = useState(false)
-    const [previousMousePosition, setPreviousMousePosition] = useState({ x: 0, y: 0 })
-    const { camera } = useThree()
+    // const [isRotating, setIsRotating] = useState(false)
+    const previousX = useRef(0)
+    const previousY = useRef(0)
+    const rotationSpeed = useRef(0)
+    const dampingFactor = useRef(0.95)
 
-    useFrame((state, delta) => {
-        if (carRef.current && !isDragging) {
-            carRef.current.rotation.y += delta * 0.5 // Quay với tốc độ 0.5 radian mỗi giây
-        }
-    })
+    const { camera, gl, viewport } = useThree()
+
+    // useFrame((state, delta) => {
+    //     if (carRef.current && !isRotating) {
+    //         carRef.current.rotation.y += delta * 0.5 // Quay với tốc độ 0.5 radian mỗi giây
+    //     }
+    // })
 
     const handlePointerDown = (event) => {
-        setIsDragging(true)
-        setPreviousMousePosition({
-            x: event.clientX,
-            y: event.clientY
-        })
+        setIsRotating(true)
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX
+        const clientY = event.touches ? event.touches[0].clientY : event.clientY
+        previousX.current = clientX
+        previousY.current = clientY
+    }
+
+    const handlePointerUp = (event) => {
+        event.stopPropagation()
+        setIsRotating(false)
+
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX
+        const deltaX = (clientX - previousX.current) / viewport.width
+        carRef.current.rotation.y += deltaX * 0.01 * Math.PI
+        previousX.current = clientX
     }
 
     const handlePointerMove = (event) => {
-        if (!isDragging) return
+        if (!isRotating) return
 
-        const deltaX = event.clientX - previousMousePosition.x
-        const deltaY = event.clientY - previousMousePosition.y
+        // const clientX = event.clientX
+        // const clientY = event.clientY
+        // const deltaX = clientX - previousX.current
+        // const deltaY = clientY - previousY.current
 
-        if (carRef.current) {
-            carRef.current.rotation.y += deltaX * 0.01
-            carRef.current.rotation.x += deltaY * 0.01
+        // if (carRef.current) {
+        //     carRef.current.rotation.y += deltaX * 0.01
+        //     carRef.current.rotation.x += deltaY * 0.01
+        // }
+
+        // previousX.current = clientX
+        // previousY.current = clientY
+        if (isRotating) {
+            handlePointerUp(event)
         }
-
-        setPreviousMousePosition({
-            x: event.clientX,
-            y: event.clientY
-        })
     }
 
-    const handlePointerUp = () => {
-        setIsDragging(false)
+    //key
+    const handleKeyDown = (event) => {
+        switch (event.key) {
+            case 'ArrowLeft':
+                if (!isRotating) {
+                    setIsRotating(true)
+                }
+                carRef.current.rotation.y += 0.01 * Math.PI
+                break
+            case 'ArrowRight':
+                if (!isRotating) {
+                    setIsRotating(true)
+                }
+                carRef.current.rotation.y -= 0.01 * Math.PI
+        }
     }
+
+    const handleKeyUp = (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            setIsRotating(false)
+        }
+    }
+
+    useFrame((state, delta) => {
+        if (!isRotating) {
+            rotationSpeed.current *= dampingFactor.current
+
+            if (Math.abs(rotationSpeed.current) < 0.001) {
+                rotationSpeed.current = 0
+            }
+            carRef.current.position.x += rotationSpeed.current * delta
+        }
+        else {
+            const rotation = carRef.current.rotation.y
+        }
+    })
+
+    useEffect(() => {
+
+        document.addEventListener('pointermove', handlePointerMove)
+        document.addEventListener('pointerdown', handlePointerDown)
+        document.addEventListener('pointerup', handlePointerUp)
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('keyup', handleKeyUp)
+        return () => {
+            document.removeEventListener('pointerdown', handlePointerDown)
+            document.removeEventListener('pointerup', handlePointerUp)
+            document.removeEventListener('pointerleave', handlePointerUp)
+            document.removeEventListener('keydown', handleKeyDown)
+            document.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [gl, handlePointerDown, handlePointerMove, handlePointerUp, handleKeyDown, handleKeyUp])
 
     return (
         <a.group
             ref={carRef}
             {...props}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerLeave={handlePointerUp}
+            // onPointerDown={handlePointerDown}
+            // onPointerMove={handlePointerMove}
+            // onPointerUp={handlePointerUp}
+            // onPointerLeave={handlePointerUp}
             style={{ cursor: 'pointer' }}
         >
             <group rotation={[-Math.PI / 2, 0, 0]} scale={0.004}>

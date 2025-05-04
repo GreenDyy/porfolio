@@ -2,20 +2,29 @@ import React, { Suspense, useState, useEffect, useContext } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import Loader from '../../components/loader/Loader'
-import Car3D from '../../models3d/car'
+import Car3D from '../../models3d/Car'
 import SeeHouse3D from '../../models3d/SeeHouse'
 import './Test.scss'
 import { useNavigate } from 'react-router-dom'
 import Sky from '../../models3d/Sky'
 import Header from '../../components/Header/Header'
+import OldMan from '../../models3d/OldMan'
 import { Button, message, Table } from 'antd'
-import { testMockData, testMockDataPostMethod } from '../Home/services'
-
+import Message from '../../components/Message/Message'
+import AuthContext from '../../contexts/AuthContext'
+import Phoenix from '../../models3d/Phoenix'
+import { use } from 'react'
+import Infor from '../../components/Infor/Infor'
 const Test = () => {
     const navigate = useNavigate()
-    const { name, setNameCustomer } = useContext(AuthContext)
-    const [dataSource, setDataSource] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [isRotating, setIsRotating] = useState(undefined)
+    const [isPlayAction, setIsPlayAction] = useState(false)
+    const [currentState, setCurrentState] = useState('1')
+
+    useEffect(() => {
+        // console.log('isRotating', isRotating)
+    }, [isRotating])
+
     const adjustSeeHouseForScreenSize = () => {
         let screenScale = null
         let screenPosition = [0, -6.5, -43]
@@ -28,84 +37,46 @@ const Test = () => {
         }
         return { screenScale, screenPosition, rotation }
     }
-    const columns = [
-        {
-            title: 'Id',
-            dataIndex: 'id',
-            key: 'id'
-        },
-        {
-            title: 'Tên mèo',
-            dataIndex: 'ten_meo',
-            key: 'ten_meo'
-        },
-        {
-            title: 'Màu lông',
-            dataIndex: 'mau_long',
-            key: 'mau_long'
-        },
-        {
-            title: 'Tính cách',
-            dataIndex: 'tinh_cach',
-            key: 'tinh_cach'
-        },
-        {
-            title: 'Cân nặng',
-            dataIndex: 'can_nang_kg',
-            key: 'can_nang_kg'
-        },
-        {
-            title: 'Tuổi',
-            dataIndex: 'tuoi_nam',
-            key: 'tuoi_nam'
-        }
-    ]
-
-    const testMockDataN8N = async () => {
-        setDataSource([])
-        setLoading(true)
-        try {
-            // const res = await testMockData()
-            const res = await testMockDataPostMethod({ chatInput: 'Hello World' })
-            console.log('mock_data_ne:', res)
-            Message.success('Lấy dữ liệu mock thành công', 3000)
-            setDataSource(res?.data?.cats)
-        } catch (error) {
-            Message.error('Lỗi khi lấy dữ liệu mock', 3000)
-            console.log('error:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
 
     const { screenScale, screenPosition, rotation } = adjustSeeHouseForScreenSize()
     return (
         <>
             <Header />
             <div className="test-container">
-
-                <Button style={{ cursor: 'pointer', margin: '20px', color: 'green' }} onClick={() => testMockDataN8N()}>Test mock data</Button>
                 <Button
                     style={{ cursor: 'pointer', margin: '20px', color: 'green' }}
+                    onClick={() => {
+                        setIsPlayAction(!isPlayAction)
+                        // console.log('isPlayAction', isPlayAction)
+                    }}
+                >
+                    {isPlayAction ? 'Dừng bay' : 'Chim bay nè'}
+                </Button>
+                <Button
+                    style={{
+                        cursor: 'pointer',
+                        margin: '20px',
+                        color: 'white',
+                        backgroundColor: '#4CAF50',
+                        position: 'fixed',
+                        top: '30px',
+                        left: '10px',
+                        padding: '10px 20px',
+                        borderRadius: '8px',
+                        fontWeight: 'bold',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                        border: 'none',
+                        zIndex: 1000,
+                        transition: 'all 0.3s ease'
+                    }}
                     onClick={() => navigate('/')}
                 >
-                    Back home
+                    Về trang chủ
                 </Button>
-                <Table
-                    loading={loading}
-                    dataSource={dataSource}
-                    columns={columns}
-                    pagination={
-                        {
-                            pageSize: 10,
-                            total: dataSource.length,
-                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-                            // showSizeChanger: true,
-                            // showQuickJumper: true,
-                        }
-                    }
-                />
+
+                {currentState && <Infor currentState={currentState} />}
                 <Canvas
+                    style={{ marginTop: '100px' }}
                     className='w-full h-full'
                     camera={{ near: 0.1, far: 100 }}
                     gl={{ preserveDrawingBuffer: true }}
@@ -115,16 +86,35 @@ const Test = () => {
                         <ambientLight intensity={4} />
                         <hemisphereLight intensity={1} groundColor="black" skyColor="green" />
                         <Sky />
-                        <Car3D />
+                        <Car3D
+                            isRotating={isRotating}
+                            setIsRotating={setIsRotating}
+                            setCurrentState={setCurrentState}
+                        />
+
+                        {/* <OldMan
+                            isRotating={isRotating}
+                            setIsRotating={setIsRotating}
+                        /> */}
+                        <Phoenix
+                            isRotating={isRotating}
+                            setIsRotating={setIsRotating}
+                            isPlayAction={isPlayAction}
+                        />
                         {/* <SeeHouse3D
-                        scale={screenScale}
-                        position={screenPosition}
-                        rotation={rotation}
-                    /> */}
+                            scale={screenScale}
+                            position={screenPosition}
+                            rotation={rotation}
+                            isRotating={isRotating}
+                            setIsRotating={setIsRotating}
+                        /> */}
+
                     </Suspense>
 
                 </Canvas>
             </div>
+
+
         </>
     )
 }
