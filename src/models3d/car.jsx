@@ -15,7 +15,7 @@ import { a } from '@react-spring/three'
 import carScene from '../assets/3d/car.glb'
 
 const Car3D = (props) => {
-    const { isRotating, setIsRotating } = props
+    const { isRotating, setIsRotating, setCurrentState } = props
     const { nodes, materials } = useGLTF(carScene)
     const carRef = useRef()
     // const [isRotating, setIsRotating] = useState(false)
@@ -23,6 +23,7 @@ const Car3D = (props) => {
     const previousY = useRef(0)
     const rotationSpeed = useRef(0)
     const dampingFactor = useRef(0.95)
+    const [cursor, setCursor] = useState('pointer')
 
     const { camera, gl, viewport } = useThree()
 
@@ -34,6 +35,7 @@ const Car3D = (props) => {
 
     const handlePointerDown = (event) => {
         setIsRotating(true)
+        setCursor('grabbing')
         const clientX = event.touches ? event.touches[0].clientX : event.clientX
         const clientY = event.touches ? event.touches[0].clientY : event.clientY
         previousX.current = clientX
@@ -43,6 +45,7 @@ const Car3D = (props) => {
     const handlePointerUp = (event) => {
         event.stopPropagation()
         setIsRotating(false)
+        setCursor('pointer')
 
         const clientX = event.touches ? event.touches[0].clientX : event.clientX
         const deltaX = (clientX - previousX.current) / viewport.width
@@ -51,23 +54,20 @@ const Car3D = (props) => {
     }
 
     const handlePointerMove = (event) => {
-        if (!isRotating) return
+        // Chỉ xoay khi đang giữ chuột trái hoặc đang chạm (touch)
+        const isMouseDown = event.buttons === 1
+        const isTouch = !!event.touches
 
-        // const clientX = event.clientX
-        // const clientY = event.clientY
-        // const deltaX = clientX - previousX.current
-        // const deltaY = clientY - previousY.current
+        if (!isRotating || (!isMouseDown && !isTouch)) return
 
-        // if (carRef.current) {
-        //     carRef.current.rotation.y += deltaX * 0.01
-        //     carRef.current.rotation.x += deltaY * 0.01
-        // }
+        const clientX = isTouch ? event.touches[0].clientX : event.clientX
+        const deltaX = clientX - previousX.current
 
-        // previousX.current = clientX
-        // previousY.current = clientY
-        if (isRotating) {
-            handlePointerUp(event)
+        if (carRef.current) {
+            carRef.current.rotation.y += deltaX * 0.01
         }
+
+        previousX.current = clientX
     }
 
     //key
@@ -93,6 +93,19 @@ const Car3D = (props) => {
         }
     }
 
+    // Hàm xác định state theo góc xoay
+    const updateStateByRotation = (rotationY) => {
+        // Đảm bảo rotationY luôn dương
+        let angle = rotationY % (2 * Math.PI)
+        if (angle < 0) angle += 2 * Math.PI
+
+        // Chia 360 độ thành 4 phần đều nhau (mỗi phần 90 độ - π/2 radian)
+        if (angle < Math.PI / 2) setCurrentState('1')
+        else if (angle < Math.PI) setCurrentState('2')
+        else if (angle < Math.PI * 3 / 2) setCurrentState('3')
+        else setCurrentState('4')
+    }
+
     useFrame((state, delta) => {
         if (!isRotating) {
             rotationSpeed.current *= dampingFactor.current
@@ -104,34 +117,44 @@ const Car3D = (props) => {
         }
         else {
             const rotation = carRef.current.rotation.y
+            updateStateByRotation(rotation)
         }
     })
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     document.addEventListener('keydown', handleKeyDown)
+    //     document.addEventListener('keyup', handleKeyUp)
+    //     return () => {
+    //         document.removeEventListener('keydown', handleKeyDown)
+    //         document.removeEventListener('keyup', handleKeyUp)
+    //     }
+    // }, [])
 
-        document.addEventListener('pointermove', handlePointerMove)
-        document.addEventListener('pointerdown', handlePointerDown)
-        document.addEventListener('pointerup', handlePointerUp)
-        document.addEventListener('keydown', handleKeyDown)
-        document.addEventListener('keyup', handleKeyUp)
-        return () => {
-            document.removeEventListener('pointerdown', handlePointerDown)
-            document.removeEventListener('pointerup', handlePointerUp)
-            document.removeEventListener('pointerleave', handlePointerUp)
-            document.removeEventListener('keydown', handleKeyDown)
-            document.removeEventListener('keyup', handleKeyUp)
-        }
-    }, [gl, handlePointerDown, handlePointerMove, handlePointerUp, handleKeyDown, handleKeyUp])
+    // useEffect(() => {
+
+    //     document.addEventListener('pointermove', handlePointerMove)
+    //     document.addEventListener('pointerdown', handlePointerDown)
+    //     document.addEventListener('pointerup', handlePointerUp)
+    //     document.addEventListener('keydown', handleKeyDown)
+    //     document.addEventListener('keyup', handleKeyUp)
+    //     return () => {
+    //         document.removeEventListener('pointerdown', handlePointerDown)
+    //         document.removeEventListener('pointerup', handlePointerUp)
+    //         document.removeEventListener('pointerleave', handlePointerUp)
+    //         document.removeEventListener('keydown', handleKeyDown)
+    //         document.removeEventListener('keyup', handleKeyUp)
+    //     }
+    // }, [gl, handlePointerDown, handlePointerMove, handlePointerUp, handleKeyDown, handleKeyUp])
 
     return (
         <a.group
             ref={carRef}
             {...props}
-            // onPointerDown={handlePointerDown}
-            // onPointerMove={handlePointerMove}
-            // onPointerUp={handlePointerUp}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
             // onPointerLeave={handlePointerUp}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: cursor }}
         >
             <group rotation={[-Math.PI / 2, 0, 0]} scale={0.004}>
                 <mesh

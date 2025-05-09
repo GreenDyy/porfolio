@@ -17,6 +17,7 @@
     align-items: center;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
 
     // overflow: hidden;
     // white-space: nowrap;
@@ -41,5 +42,6 @@
         background: linear-gradient(45deg, #4CAF50, #2196F3);
         z-index: -1;
         opacity: 0.5;
+        transition: all 0.3s ease;
     }
 }

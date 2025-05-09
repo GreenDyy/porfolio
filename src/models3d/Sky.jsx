@@ -15,7 +15,7 @@ const Sky = () => {
     // })
 
     return (
-        <mesh ref={skyRef} position={[-5, 2, 1]} scale={0.03} rotation={[0, 0, 0]}>
+        <mesh ref={skyRef} position={[-5, 2, -2]} scale={0.03} rotation={[0, 0, 0]}>
             <primitive object={scene} />
         </mesh>
     )

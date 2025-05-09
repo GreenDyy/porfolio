@@ -74,7 +74,6 @@ const Test = () => {
                     Về trang chủ
                 </Button>
 
-                {currentState && <Infor currentState={currentState} />}
                 <Canvas
                     style={{ marginTop: '100px' }}
                     className='w-full h-full'
@@ -112,6 +111,9 @@ const Test = () => {
                     </Suspense>
 
                 </Canvas>
+
+                {/* show info */}
+                {currentState && <Infor currentState={currentState} />}
             </div>
 
 
