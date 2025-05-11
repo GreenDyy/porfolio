@@ -2,7 +2,7 @@ import React, { Suspense, useState, useEffect, useContext } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import Loader from '../../components/loader/Loader'
-import Car3D from '../../models3d/Car'
+import Car3D from '../../models3d/Car3D'
 import SeeHouse3D from '../../models3d/SeeHouse'
 import './Test.scss'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +15,9 @@ import AuthContext from '../../contexts/AuthContext'
 import Phoenix from '../../models3d/Phoenix'
 import { use } from 'react'
 import Infor from '../../components/Infor/Infor'
+import MouseFollower from '../../components/MouseFollower'
+import PlaySong from '../../components/PlaySong/PlaySong'
+
 const Test = () => {
     const navigate = useNavigate()
     const [isRotating, setIsRotating] = useState(undefined)
@@ -74,6 +77,7 @@ const Test = () => {
                     Về trang chủ
                 </Button>
 
+
                 <Canvas
                     style={{ marginTop: '100px' }}
                     className='w-full h-full'
@@ -85,16 +89,17 @@ const Test = () => {
                         <ambientLight intensity={4} />
                         <hemisphereLight intensity={1} groundColor="black" skyColor="green" />
                         <Sky />
-                        <Car3D
+                        {/* <MouseFollower /> */}
+                        {/* <Car3D
                             isRotating={isRotating}
                             setIsRotating={setIsRotating}
                             setCurrentState={setCurrentState}
-                        />
+                        /> */}
 
-                        {/* <OldMan
+                        <OldMan
                             isRotating={isRotating}
                             setIsRotating={setIsRotating}
-                        /> */}
+                        />
                         <Phoenix
                             isRotating={isRotating}
                             setIsRotating={setIsRotating}
@@ -114,6 +119,8 @@ const Test = () => {
 
                 {/* show info */}
                 {currentState && <Infor currentState={currentState} />}
+
+                {/* <PlaySong /> */}
             </div>
 
 
