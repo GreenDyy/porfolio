@@ -157,3 +157,4 @@ function Car3D(props) {
 
 useGLTF.preload('/car.glb')
 export default Car3D
+

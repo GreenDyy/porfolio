@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Home.scss'
-import { Button, Card, Col, Flex, Layout, Row, Space, Typography } from 'antd'
+import { Button, Card, Col, Flex, FloatButton, Layout, Row, Space, Typography } from 'antd'
 import { Footer, Header } from '../../components'
 import { blue, green } from '@ant-design/colors'
 import {
@@ -16,12 +16,18 @@ import {
   ToolFilled,
   DatabaseFilled,
   GlobalOutlined,
-  TrophyOutlined
+  TrophyOutlined,
+  CloseOutlined,
+  MoreOutlined,
+  HeartTwoTone,
+  PlaySquareTwoTone,
+  PauseOutlined
 } from '@ant-design/icons'
 
 import { coreTechs, beAndDatabases, tools } from './initData'
 import { university } from './text'
 import { useNavigate } from 'react-router-dom'
+import PlaySong from '../../components/PlaySong/PlaySong'
 
 const { Title, Text, Link } = Typography
 
@@ -29,6 +35,7 @@ function Home() {
   const [dataCoreTechs, setDataCoreTechs] = useState(coreTechs)
   const [dataBeAndDatabases, setDataBeAndDatabases] = useState(beAndDatabases)
   const [dataTools, setDataTools] = useState(tools)
+  const [isPlayingSong, setIsPlayingSong] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -36,6 +43,10 @@ function Home() {
     setDataBeAndDatabases(beAndDatabases)
     setDataTools(tools)
   }, [])
+
+  const handlePlaySong = () => {
+    setIsPlayingSong(!isPlayingSong)
+  }
 
 
   return (
@@ -47,6 +58,12 @@ function Home() {
         width: '100%',
         maxWidth: '100%'
       }}>
+        <PlaySong
+          src="/audios/TinhYeuDau.mp3"
+          hidden
+          isPlaying={isPlayingSong}
+          setIsPlaying={setIsPlayingSong}
+        />
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
@@ -326,6 +343,12 @@ function Home() {
           </Space>
 
         </Flex>
+
+        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={green[6]} />} switchIcon={<CloseOutlined />}>
+          <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
+          <FloatButton icon={<GithubOutlined />} tooltip="Github" />
+          <FloatButton icon={<GlobalOutlined />} tooltip="Website" />
+        </FloatButton.Group>
       </Layout.Content>
 
       {/* <Footer /> */}

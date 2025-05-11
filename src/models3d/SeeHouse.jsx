@@ -11,13 +11,21 @@ import { useGLTF } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { a } from '@react-spring/three'
 import seeHouseScene from '../assets/3d/sea_house.glb'
+import { useFrame } from '@react-three/fiber'
 
 export default function SeeHouse3D(props) {
+    const { isRotating, setIsRotating } = props
     const { nodes, materials } = useGLTF(seeHouseScene)
     const houseRef = useRef()
     const [isDragging, setIsDragging] = useState(false)
     const [previousMousePosition, setPreviousMousePosition] = useState({ x: 0, y: 0 })
     const { camera } = useThree()
+
+    useFrame((state, delta) => {
+        if (isRotating) {
+            houseRef.current.rotation.y += delta * 0.01
+        }
+    })
 
     const handlePointerDown = (event) => {
         setIsDragging(true)
