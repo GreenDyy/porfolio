@@ -21,7 +21,6 @@ import PlaySong from '../../components/PlaySong/PlaySong'
 const Test = () => {
     const [isRotating, setIsRotating] = useState(false)
     const navigate = useNavigate()
-    const [isRotating, setIsRotating] = useState(undefined)
     const [isPlayAction, setIsPlayAction] = useState(false)
     const [currentState, setCurrentState] = useState('1')
 
