@@ -3,10 +3,11 @@ import { Layout, Typography, Button, Drawer, message } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
 import './Header.scss'
-
+import { Link, useNavigate } from 'react-router-dom'
 const { Title } = Typography
 
 function Header() {
+    const navigate = useNavigate()
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const isMobile = useMediaQuery({ maxWidth: 768 })
     const isTablet = useMediaQuery({ maxWidth: 1024 })
@@ -28,9 +29,9 @@ function Header() {
 
     const menuItems = (
         <>
-            <a href="/" onClick={onClose}>Trang chủ</a>
-            <a href="/about" onClick={onClose}>Giới thiệu</a>
-            <a href="/contact" onClick={onClose}>Liên hệ</a>
+            <Link to="/" onClick={onClose}>Trang chủ</Link>
+            <Link to="/about" onClick={onClose}>Giới thiệu</Link>
+            <Link to="/contact" onClick={onClose}>Liên hệ</Link>
         </>
     )
 
