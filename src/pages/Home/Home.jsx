@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import './Home.scss'
 import { Button, Card, Col, Flex, FloatButton, Layout, Row, Space, Typography } from 'antd'
+import { useMediaQuery } from 'react-responsive';
 import { Footer, Header } from '../../components'
 import { blue, green } from '@ant-design/colors'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import Phoenix from '../../models3d/Phoenix'
 import {
   GithubOutlined,
   FacebookOutlined,
@@ -28,16 +32,17 @@ import { coreTechs, beAndDatabases, tools } from './initData'
 import { university } from './text'
 import { useNavigate } from 'react-router-dom'
 import PlaySong from '../../components/PlaySong/PlaySong'
-
+import { useBreakpoints } from '../../utilities/breakpoint'
 const { Title, Text, Link } = Typography
 
 function Home() {
+  const navigate = useNavigate()
   const [dataCoreTechs, setDataCoreTechs] = useState(coreTechs)
   const [dataBeAndDatabases, setDataBeAndDatabases] = useState(beAndDatabases)
   const [dataTools, setDataTools] = useState(tools)
   const [isPlayingSong, setIsPlayingSong] = useState(false)
-  const navigate = useNavigate()
-
+  const [isRotating, setIsRotating] = useState(false)
+  const { isMobile, isTablet, isDesktop } = useBreakpoints()
   useEffect(() => {
     setDataCoreTechs(coreTechs)
     setDataBeAndDatabases(beAndDatabases)
@@ -48,13 +53,11 @@ function Home() {
     setIsPlayingSong(!isPlayingSong)
   }
 
-
   return (
     <Layout style={{ background: "black", color: "white", overflow: 'hidden' }}>
       {/* <Header /> */}
 
       <Layout.Content className='container' style={{
-
         width: '100%',
         maxWidth: '100%'
       }}>
@@ -349,6 +352,24 @@ function Home() {
           <FloatButton icon={<GithubOutlined />} tooltip="Github" />
           <FloatButton icon={<GlobalOutlined />} tooltip="Website" />
         </FloatButton.Group>
+
+        {/*place 3d */}
+        <div className='container-3d'>
+          <Canvas
+            camera={{ near: 0.1, far: 100, position: [0, 0, 10] }}
+            gl={{ preserveDrawingBuffer: true }}
+          >
+            <directionalLight position={[1, 1, 1]} intensity={2} />
+            <ambientLight intensity={4} />
+            <hemisphereLight intensity={1} groundColor="black" skyColor="green" />
+            <Phoenix
+              isRotating={isRotating}
+              setIsRotating={setIsRotating}
+              isPlayAction={false}
+              position={[-10, 0, 0]} // V
+            />
+          </Canvas>
+        </div>
       </Layout.Content>
 
       {/* <Footer /> */}

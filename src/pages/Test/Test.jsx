@@ -90,16 +90,16 @@ const Test = () => {
                         <hemisphereLight intensity={1} groundColor="black" skyColor="green" />
                         <Sky />
                         {/* <MouseFollower /> */}
-                        {/* <Car3D
+                        <Car3D
                             isRotating={isRotating}
                             setIsRotating={setIsRotating}
                             setCurrentState={setCurrentState}
-                        /> */}
+                        />
 
-                        <OldMan
+                        {/* <OldMan
                             isRotating={isRotating}
                             setIsRotating={setIsRotating}
-                        />
+                        /> */}
                         <Phoenix
                             isRotating={isRotating}
                             setIsRotating={setIsRotating}

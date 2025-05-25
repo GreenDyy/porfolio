@@ -46,7 +46,7 @@ const Phoenix = (props) => {
     })
 
     return (
-        <mesh ref={modelRef} position={[-2, 0, 1]} scale={0.003}>
+        <mesh ref={modelRef} position={[-2, 0, 1]} scale={0.003} {...props}>
             <primitive object={scene} />
         </mesh>
     )
