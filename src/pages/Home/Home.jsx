@@ -352,7 +352,7 @@ function Home() {
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
           <FloatButton icon={<GithubOutlined />} tooltip="Github" />
           <FloatButton icon={<GlobalOutlined />} tooltip="Website" />
-          <FloatButton icon={<QqOutlined />} tooltip="Test screen" onClick={() => window.open('/test-area', '_blank')} />
+          <FloatButton icon={<QqOutlined />} tooltip="Vùng thử nghiệm 🤣" onClick={() => navigate('/test-area')} />
         </FloatButton.Group>
 
         {/*place 3d */}
