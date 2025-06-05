@@ -1,24 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { Home, Test } from './pages';
 import { AuthProvider } from './contexts/AuthContext'
+import AppRoutes from './routes';
+import { Home, Test } from './pages';
+import TrySomethings from './pages/TrySomethings/TrySomethings';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <div className="App">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} >
-              <Route path="test" element={<Test />} />
-            </Route>
-            <Route path="/test" element={<Test />} />
-          </Routes>
+          <AppRoutes />
         </div>
       </BrowserRouter>
     </AuthProvider>
-
   );
 }
 

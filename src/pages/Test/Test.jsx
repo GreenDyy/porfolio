@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import Sky from '../../models3d/Sky'
 import Header from '../../components/Header/Header'
 import OldMan from '../../models3d/OldMan'
-import { Button, message, Table } from 'antd'
+import { Button, FloatButton, message, Table } from 'antd'
 import Message from '../../components/Message/Message'
 import AuthContext from '../../contexts/AuthContext'
 import Phoenix from '../../models3d/Phoenix'
@@ -17,6 +17,7 @@ import { use } from 'react'
 import Infor from '../../components/Infor/Infor'
 import MouseFollower from '../../components/MouseFollower'
 import PlaySong from '../../components/PlaySong/PlaySong'
+import { QqOutlined, RollbackOutlined } from '@ant-design/icons'
 
 const Test = () => {
     const [isRotating, setIsRotating] = useState(false)
@@ -46,7 +47,7 @@ const Test = () => {
         <>
             <Header />
             <div className="test-container">
-                <Button
+                {/* <Button
                     style={{ cursor: 'pointer', margin: '20px', color: 'green' }}
                     onClick={() => {
                         setIsPlayAction(!isPlayAction)
@@ -54,29 +55,7 @@ const Test = () => {
                     }}
                 >
                     {isPlayAction ? 'Dừng bay' : 'Chim bay nè'}
-                </Button>
-                <Button
-                    style={{
-                        cursor: 'pointer',
-                        margin: '20px',
-                        color: 'white',
-                        backgroundColor: '#4CAF50',
-                        position: 'fixed',
-                        top: '30px',
-                        left: '10px',
-                        padding: '10px 20px',
-                        borderRadius: '8px',
-                        fontWeight: 'bold',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                        border: 'none',
-                        zIndex: 1000,
-                        transition: 'all 0.3s ease'
-                    }}
-                    onClick={() => navigate('/')}
-                >
-                    Về trang chủ
-                </Button>
-
+                </Button> */}
 
                 <Canvas
                     style={{ marginTop: '100px' }}
@@ -123,6 +102,8 @@ const Test = () => {
                 {/* <PlaySong /> */}
             </div>
 
+            {/* float button */}
+            <FloatButton icon={<RollbackOutlined />} tooltip="Quay lại test-area" onClick={() => navigate('/test-area')} />
 
         </>
     )

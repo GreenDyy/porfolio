@@ -25,7 +25,8 @@ import {
   MoreOutlined,
   HeartTwoTone,
   PlaySquareTwoTone,
-  PauseOutlined
+  PauseOutlined,
+  QqOutlined
 } from '@ant-design/icons'
 
 import { coreTechs, beAndDatabases, tools } from './initData'
@@ -70,7 +71,7 @@ function Home() {
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
-            <Title onClick={() => navigate('/test')} style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
+            <Title style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
               Hii!
             </Title>
             <Title style={{ color: green[6] }}>
@@ -351,6 +352,7 @@ function Home() {
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
           <FloatButton icon={<GithubOutlined />} tooltip="Github" />
           <FloatButton icon={<GlobalOutlined />} tooltip="Website" />
+          <FloatButton icon={<QqOutlined />} tooltip="Test screen" onClick={() => window.open('/test-area', '_blank')} />
         </FloatButton.Group>
 
         {/*place 3d */}
