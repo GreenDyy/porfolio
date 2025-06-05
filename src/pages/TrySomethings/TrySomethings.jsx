@@ -12,8 +12,8 @@ function TrySomethings() {
         <>
             <Flex vertical justify="center" align="center" style={{ height: '100vh' }}>
                 <h1>Try Some Things</h1>
-                <Card title="Bảng điều khiển" style={{ width: '100%', maxWidth: 600 }}>
-                    <Space>
+                <Card title="Bảng điều khiển" style={{ width: '100%', maxWidth: 800 }}>
+                    <Space style={{ overflowX: 'auto', width: '100%', padding: 10 }} >
                         <Button type="primary" style={{ backgroundColor: '#f5222d', borderColor: '#f5222d' }} onClick={() => navigate('/test-area/test-3d')}>/test-area/test-3d</Button>
                         <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }} onClick={() => navigate('/test-3d')}>/test-3d</Button>
                         <Button type="primary" style={{ backgroundColor: '#1890ff', borderColor: '#1890ff' }} onClick={() => navigate('/test-area')}>/test-area</Button>
