@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [name, setName] = useState('no name');
 
   useEffect(() => {
-    console.log('current name', name)
+    // console.log('current name', name)
   }, [name]);
 
   const setNameCustomer = (name) => {

@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Home, Test, Test2, TrySomethings } from '../pages';
+import { TestPromise } from '../pages/Test/TestPromise';
 
 export default function AppRoutes() {
     return (
@@ -13,6 +14,7 @@ export default function AppRoutes() {
             </Route>
             <Route path="/test-3d" element={<Test />} />
             <Route path="/test-2" element={<Test2 />} />
+            <Route path="/test-promise" element={<TestPromise />} />
         </Routes>
     );
 } 
