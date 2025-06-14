@@ -351,12 +351,12 @@ function Home() {
         <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={green[6]} />} switchIcon={<CloseOutlined />}>
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
           <FloatButton icon={<GithubOutlined />} tooltip="Github" />
-          <FloatButton icon={<GlobalOutlined />} tooltip="Website" />
+          {/* <FloatButton icon={<GlobalOutlined />} tooltip="Website" /> */}
           <FloatButton icon={<QqOutlined />} tooltip="Vùng thử nghiệm 🤣" onClick={() => navigate('/test-area')} />
         </FloatButton.Group>
 
-        {/*place 3d */}
-        <div className='container-3d'>
+        {/*place 3d, đang bị chặn tương tác toàn vùng, cần fix*/}
+        {/* <div className='container-3d'>
           <Canvas
             camera={{ near: 0.1, far: 100, position: [0, 0, 10] }}
             gl={{ preserveDrawingBuffer: true }}
@@ -371,7 +371,7 @@ function Home() {
               position={[-10, 0, 0]} // V
             />
           </Canvas>
-        </div>
+        </div> */}
       </Layout.Content>
 
       {/* <Footer /> */}
