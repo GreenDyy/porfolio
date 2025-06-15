@@ -1,8 +1,7 @@
 import { Button, Flex } from 'antd'
 import React, { useState, useEffect } from 'react'
 
-
-export const TestPromise = () => {
+const TestPromise = () => {
     const testFunc = async () => {
         console.log('1')
         await setTimeout(() => {
@@ -88,3 +87,4 @@ export const TestPromise = () => {
         </Flex>
     )
 }
+export default TestPromise

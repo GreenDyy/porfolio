@@ -2,11 +2,12 @@ import { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
+//để bọc vào app
 export const AuthProvider = ({ children }) => {
   const [name, setName] = useState('no name');
 
   useEffect(() => {
-    // console.log('current name', name)
+    console.log('current name', name)
   }, [name]);
 
   const setNameCustomer = (name) => {
@@ -21,5 +22,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
+//để dùng chung cho các component
 export default AuthContext;
