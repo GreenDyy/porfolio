@@ -18,9 +18,9 @@ function TrySomethings() {
                         <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }} onClick={() => navigate('/test-3d')}>/test-3d</Button>
                         <Button type="primary" style={{ backgroundColor: '#1890ff', borderColor: '#1890ff' }} onClick={() => navigate('/test-area')}>/test-area</Button>
                         <Button type="primary" style={{ backgroundColor: '#722ed1', borderColor: '#722ed1' }} onClick={() => navigate('/test-2')}>/Test-2</Button>
-                        <Button type="primary" style={{ backgroundColor: '#fa8c16', borderColor: '#fa8c16' }} onClick={() => navigate('/test-area')}>/test-area</Button>
                         <Button type="primary" style={{ backgroundColor: '#fa8c16', borderColor: '#fa8c16' }} onClick={() => navigate('/test-promise')}>/test-promise</Button>
                         <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }} onClick={() => navigate('/test-use-context')}>/test-use-context</Button>
+                        <Button type="primary" style={{ backgroundColor: '#eb2f96', borderColor: '#eb2f96' }} onClick={() => navigate('/test-upload')}>/test-upload</Button>
                     </Space>
                 </Card>
                 {/* float button */}
