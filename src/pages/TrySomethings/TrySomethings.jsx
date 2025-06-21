@@ -21,6 +21,7 @@ function TrySomethings() {
                         <Button type="primary" style={{ backgroundColor: '#fa8c16', borderColor: '#fa8c16' }} onClick={() => navigate('/test-promise')}>/test-promise</Button>
                         <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }} onClick={() => navigate('/test-use-context')}>/test-use-context</Button>
                         <Button type="primary" style={{ backgroundColor: '#eb2f96', borderColor: '#eb2f96' }} onClick={() => navigate('/test-upload')}>/test-upload</Button>
+                        <Button type="primary" style={{ backgroundColor: '#eb2f96', borderColor: '#eb2f96' }} onClick={() => navigate('/test-drag-and-drop')}>/test-drag-and-drop</Button>
                     </Space>
                 </Card>
                 {/* float button */}
