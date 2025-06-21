@@ -34,6 +34,7 @@ import { university } from './text'
 import { useNavigate } from 'react-router-dom'
 import PlaySong from '../../components/PlaySong/PlaySong'
 import { useBreakpoints } from '../../utilities/breakpoint'
+import Video from '../../components/Video/Video';
 const { Title, Text, Link } = Typography
 
 function Home() {
@@ -331,6 +332,13 @@ function Home() {
             </Row>
           </Flex>
 
+          {/* embed video */}
+          <Video
+            // title="AI LỚN CŨNG PHẢI"
+            description="Có thể chìm nhưng không thể ngã"
+            src="https://www.youtube.com/embed/zlaEpHztvj0"
+          />
+
           <Space style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '40px 0' }}>
             <Link href="https://github.com/GreenDyy" target="_blank">
               <GithubOutlined style={{ fontSize: 32, color: '#A6A6A6', marginRight: 24, transition: 'color 0.3s' }} className="social-icon" />
@@ -345,10 +353,9 @@ function Home() {
               <YoutubeOutlined style={{ fontSize: 32, color: '#A6A6A6', transition: 'color 0.3s' }} className="social-icon" />
             </Link>
           </Space>
-
         </Flex>
 
-        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={green[6]} />} switchIcon={<CloseOutlined />}>
+        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={'#52c41a'} />} switchIcon={<CloseOutlined />}>
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
           <FloatButton icon={<GithubOutlined />} tooltip="Github" />
           {/* <FloatButton icon={<GlobalOutlined />} tooltip="Website" /> */}
