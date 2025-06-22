@@ -336,7 +336,7 @@ function Home() {
           <Video
             // title="AI LỚN CŨNG PHẢI"
             description="Có thể chìm nhưng không thể ngã"
-            src="https://www.youtube.com/embed/zlaEpHztvj0"
+          // src="https://www.youtube.com/embed/zlaEpHztvj0"
           />
 
           <Space style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '40px 0' }}>
