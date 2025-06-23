@@ -357,7 +357,11 @@ function Home() {
 
         <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={'#52c41a'} />} switchIcon={<CloseOutlined />}>
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
-          <FloatButton icon={<GithubOutlined />} tooltip="Github" />
+          <FloatButton
+            icon={<GithubOutlined />}
+            tooltip="Github"
+            onClick={() => { window.open('https://github.com/GreenDyy', '_blank', 'noopener') }}
+          />
           {/* <FloatButton icon={<GlobalOutlined />} tooltip="Website" /> */}
           <FloatButton icon={<QqOutlined />} tooltip="Vùng thử nghiệm 🤣" onClick={() => navigate('/test-area')} />
         </FloatButton.Group>
