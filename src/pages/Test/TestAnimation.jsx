@@ -1,7 +1,7 @@
 import React from 'react'
 import './Test.scss'
 import { ButtonCustom } from '../../components'
-import { Parallax } from 'react-scroll-parallax'
+import { Parallax, ParallaxBanner } from 'react-scroll-parallax'
 
 const TestAnimation = () => {
     return (

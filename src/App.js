@@ -4,15 +4,18 @@ import { AuthProvider } from './contexts/AuthContext'
 import AppRoutes from './routes';
 import { Home, Test } from './pages';
 import TrySomethings from './pages/TrySomethings/TrySomethings';
+import {ParallaxProvider} from 'react-scroll-parallax';
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <div className="App">
-          <AppRoutes />
-        </div>
-      </BrowserRouter>
+      <ParallaxProvider>
+        <BrowserRouter>
+          <div className="App">
+            <AppRoutes />
+          </div>
+        </BrowserRouter>
+      </ParallaxProvider>
     </AuthProvider>
   );
 }
