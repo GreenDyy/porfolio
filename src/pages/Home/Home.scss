@@ -1,6 +1,11 @@
 .container {
     min-height: 100vh;
     position: relative;
+    // background-image: url('../../assets/images/sky.png');
+    // background-size: cover;
+    // background-position: center;
+    // background-repeat: no-repeat;
+    background-color: #000;
 
     .intro {
         padding: 200px;

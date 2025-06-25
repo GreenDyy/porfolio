@@ -56,7 +56,7 @@ function Home() {
   }
 
   return (
-    <Layout style={{ background: "black", color: "white", overflow: 'hidden' }}>
+    <Layout style={{ color: "white", overflow: 'hidden' }}>
       {/* <Header /> */}
 
       <Layout.Content className='container' style={{

@@ -8,7 +8,10 @@ const TestAnimation = () => {
         <div className='container'>
             {/* <ButtonCustom /> */}
             <Parallax speed={-10}>
-                <div />
+                <div>huhu</div>
+            </Parallax>
+            <Parallax speed={10}>
+                <div>huhu</div>
             </Parallax>
         </div>
     )
