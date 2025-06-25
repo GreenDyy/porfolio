@@ -5,14 +5,15 @@ import { Parallax, ParallaxBanner } from 'react-scroll-parallax'
 
 const TestAnimation = () => {
     return (
-        <div className='container'>
+        <div className='test-container'>
             {/* <ButtonCustom /> */}
             <Parallax speed={-10}>
-                <div>huhu</div>
+                <div>huhsu</div>
             </Parallax>
             <Parallax speed={10}>
-                <div>huhu</div>
+                <div>Tao nè</div>
             </Parallax>
+            <p>as</p>
         </div>
     )
 }
