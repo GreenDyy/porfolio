@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './Home.scss'
+import '../../styles/global-animations.scss'
 import { Button, Card, Col, Flex, FloatButton, Layout, Row, Space, Typography } from 'antd'
 import { useMediaQuery } from 'react-responsive';
 import { Footer, Header } from '../../components'
@@ -35,7 +36,12 @@ import { useNavigate } from 'react-router-dom'
 import PlaySong from '../../components/PlaySong/PlaySong'
 import { useBreakpoints } from '../../utilities/breakpoint'
 import Video from '../../components/Video/Video';
+import { PageLoader } from '../../components'
+
 const { Title, Text, Link } = Typography
+
+// Constant màu chính
+const PRIMARY_COLOR = '#40AF58'
 
 function Home() {
   const navigate = useNavigate()
@@ -45,21 +51,81 @@ function Home() {
   const [isPlayingSong, setIsPlayingSong] = useState(false)
   const [isRotating, setIsRotating] = useState(false)
   const { isMobile, isTablet, isDesktop } = useBreakpoints()
-  useEffect(() => {
-    setDataCoreTechs(coreTechs)
-    setDataBeAndDatabases(beAndDatabases)
-    setDataTools(tools)
-  }, [])
+  const [showContent, setShowContent] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+  const timerRef = useRef(null);
+
+  const [showLines, setShowLines] = useState({
+    line1: false,
+    line2: false,
+    line3: false
+  });
 
   const handlePlaySong = () => {
     setIsPlayingSong(!isPlayingSong)
+  }
+
+  const startContentAnimation = () => {
+    setShowContent(true)
+    setShowLines((current) => ({
+      ...current,
+      line1: true
+    }))
+    setTimeout(() => {
+      setShowLines((current) => ({
+        ...current,
+        line2: true
+      }))
+    }, 200)
+    setTimeout(() => {
+      setShowLines((current) => ({
+        ...current,
+        line3: true
+      }))
+    }, 400)
+  }
+
+  const handleSkipLoader = () => {
+    // Clear timer nếu còn tồn tại
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+
+    // Set states để bỏ qua loader
+    setShowLoader(false)
+
+    // Bắt đầu animation content
+    startContentAnimation()
+  }
+
+  useEffect(() => {
+    //set data
+    setDataCoreTechs(coreTechs)
+    setDataBeAndDatabases(beAndDatabases)
+    setDataTools(tools)
+
+    //xử lý animation
+    const timer = setTimeout(() => {
+      setShowLoader(false)
+      setTimeout(() => {
+        startContentAnimation()
+      }, 300)
+    }, 2000)
+
+    timerRef.current = timer
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (showLoader) {
+    return <PageLoader onClick={handleSkipLoader} />
   }
 
   return (
     <Layout style={{ color: "white", overflow: 'hidden' }}>
       {/* <Header /> */}
 
-      <Layout.Content className='container' style={{
+      <Layout.Content className={`container ${showContent ? 'content-visible' : 'content-hidden'}`} style={{
         width: '100%',
         maxWidth: '100%'
       }}>
@@ -72,31 +138,31 @@ function Home() {
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
-            <Title style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
+            <Title className={`content-fade-in ${showLines.line1 ? 'is-visible' : ''}`} style={{ color: PRIMARY_COLOR, fontSize: '68px', margin: 0, padding: 0 }} level={1}>
               Hii!
             </Title>
-            <Title style={{ color: green[6] }}>
+            <Title className={`content-fade-in ${showLines.line2 ? 'is-visible' : ''}`} style={{ color: PRIMARY_COLOR, marginTop: 30 }}>
               {'My name is Huynh Khanh Duy (GreenD)'}
             </Title>
-            <Text style={{ color: 'white', fontSize: '24px', fontWeight: '500' }}>
+            <Text className={`content-fade-in ${showLines.line3 ? 'is-visible' : ''}`} style={{ color: 'white', fontSize: '24px', fontWeight: '500' }}>
               I'm a developer who likes to do different and cool things, learn from great people 😉. Oh, and I really like the color green!🍀
             </Text>
             {/* here */}
             <Space size={'large'} style={{ marginTop: 20 }}>
               <Link href="https://github.com/GreenDyy" target="_blank">
-                <GithubOutlined style={{ fontSize: '30px', color: green[6] }} />
+                <GithubOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
               </Link>
               <Link href="https://www.facebook.com/greendyy" target="_blank">
-                <FacebookOutlined style={{ fontSize: '30px', color: green[6] }} />
+                <FacebookOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
               </Link>
               <Link href="https://www.instagram.com/greendyy" target="_blank">
-                <InstagramOutlined style={{ fontSize: '30px', color: green[6] }} />
+                <InstagramOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
               </Link>
               <Link href="https://github.com/GreenDyy" target="_blank">
-                <LinkedinOutlined style={{ fontSize: '30px', color: green[6] }} />
+                <LinkedinOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
               </Link>
               <Link href="https://www.youtube.com/channel/UCvmIHpWJ5HFjA3qqOIXaM7A" target="_blank">
-                <YoutubeOutlined style={{ fontSize: '30px', color: green[6] }} />
+                <YoutubeOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
               </Link>
             </Space>
           </Flex>
@@ -106,7 +172,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
               Skills & Expertise
             </Title>
 
@@ -116,7 +182,7 @@ function Home() {
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
                 {/* <span style={{ color: green[6], marginRight: 10 }}>|</span> Core Technologies */}
-                <FireFilled style={{ color: green[6], marginRight: 8 }} />
+                <FireFilled style={{ color: PRIMARY_COLOR, marginRight: 8 }} />
                 Core Technologies
               </Title>
               <Row gutter={[24, 24]}>
@@ -132,7 +198,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: PRIMARY_COLOR }} />
                     }
                   }
                   return (
@@ -159,7 +225,7 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <DatabaseFilled style={{ color: green[6], marginRight: 8 }} />
+                <DatabaseFilled style={{ color: PRIMARY_COLOR, marginRight: 8 }} />
                 Backend & Database
               </Title>
               <Row gutter={[24, 24]}>
@@ -174,7 +240,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: PRIMARY_COLOR }} />
                     }
                   }
                   return (
@@ -203,7 +269,7 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <ToolFilled style={{ color: green[6], marginRight: 8 }} />
+                <ToolFilled style={{ color: PRIMARY_COLOR, marginRight: 8 }} />
                 Tools
               </Title>
               <Row gutter={[24, 24]}>
@@ -218,7 +284,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: PRIMARY_COLOR }} />
                     }
                   }
                   return (
@@ -247,7 +313,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
               Education
             </Title>
 
@@ -256,7 +322,7 @@ function Home() {
             >
               <Title level={4} style={{ marginTop: 0, color: 'white' }}>{university.name}</Title>
 
-              <Title level={4} style={{ color: green[6] }}>{university.degree}</Title>
+              <Title level={4} style={{ color: PRIMARY_COLOR }}>{university.degree}</Title>
               <Text style={{ color: '#A6A6A6', display: 'block', marginBottom: 10 }}>{university.duration}</Text>
 
               <Text style={{ color: '#A6A6A6', display: 'block' }}>{university.description}</Text>
@@ -268,7 +334,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
               Languages
             </Title>
 
@@ -278,7 +344,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
+                    <GlobalOutlined style={{ fontSize: 32, color: PRIMARY_COLOR }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>Vietnamese</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Native Proficiency</Text>
@@ -293,7 +359,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
+                    <GlobalOutlined style={{ fontSize: 32, color: PRIMARY_COLOR }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>English</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Professional Proficiency</Text>
@@ -310,7 +376,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
               Certifications & Awards
             </Title>
 
@@ -320,7 +386,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align='center' gap={16}>
-                    <TrophyOutlined style={{ fontSize: 32, color: green[6] }} />
+                    <TrophyOutlined style={{ fontSize: 32, color: PRIMARY_COLOR }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>TOEIC 545</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Educational Testing Service (ETS)</Text>
@@ -355,7 +421,7 @@ function Home() {
           </Space>
         </Flex>
 
-        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={'#52c41a'} />} switchIcon={<CloseOutlined />}>
+        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={PRIMARY_COLOR} />} switchIcon={<CloseOutlined />}>
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
           <FloatButton
             icon={<GithubOutlined />}
