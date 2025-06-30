@@ -37,11 +37,8 @@ import PlaySong from '../../components/PlaySong/PlaySong'
 import { useBreakpoints } from '../../utilities/breakpoint'
 import Video from '../../components/Video/Video';
 import { PageLoader } from '../../components'
-
+import { appColors } from '../../constants/appColors'
 const { Title, Text, Link } = Typography
-
-// Constant màu chính
-const PRIMARY_COLOR = '#40AF58'
 
 function Home() {
   const navigate = useNavigate()
@@ -138,10 +135,10 @@ function Home() {
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
-            <Title className={`content-fade-in ${showLines.line1 ? 'is-visible' : ''}`} style={{ color: PRIMARY_COLOR, fontSize: '68px', margin: 0, padding: 0 }} level={1}>
+            <Title className={`content-fade-in ${showLines.line1 ? 'is-visible' : ''}`} style={{ color: appColors?.GREEND, fontSize: '68px', margin: 0, padding: 0 }} level={1}>
               Hii!
             </Title>
-            <Title className={`content-fade-in ${showLines.line2 ? 'is-visible' : ''}`} style={{ color: PRIMARY_COLOR, marginTop: 30 }}>
+            <Title className={`content-fade-in ${showLines.line2 ? 'is-visible' : ''}`} style={{ color: appColors?.GREEND, marginTop: 30 }}>
               {'My name is Huynh Khanh Duy (GreenD)'}
             </Title>
             <Text className={`content-fade-in ${showLines.line3 ? 'is-visible' : ''}`} style={{ color: 'white', fontSize: '24px', fontWeight: '500' }}>
@@ -150,19 +147,19 @@ function Home() {
             {/* here */}
             <Space size={'large'} style={{ marginTop: 20 }}>
               <Link href="https://github.com/GreenDyy" target="_blank">
-                <GithubOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
+                <GithubOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
               </Link>
               <Link href="https://www.facebook.com/greendyy" target="_blank">
-                <FacebookOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
+                <FacebookOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
               </Link>
               <Link href="https://www.instagram.com/greendyy" target="_blank">
-                <InstagramOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
+                <InstagramOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
               </Link>
               <Link href="https://github.com/GreenDyy" target="_blank">
-                <LinkedinOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
+                <LinkedinOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
               </Link>
               <Link href="https://www.youtube.com/channel/UCvmIHpWJ5HFjA3qqOIXaM7A" target="_blank">
-                <YoutubeOutlined style={{ fontSize: '30px', color: PRIMARY_COLOR }} />
+                <YoutubeOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
               </Link>
             </Space>
           </Flex>
@@ -172,7 +169,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Skills & Expertise
             </Title>
 
@@ -182,7 +179,7 @@ function Home() {
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
                 {/* <span style={{ color: green[6], marginRight: 10 }}>|</span> Core Technologies */}
-                <FireFilled style={{ color: PRIMARY_COLOR, marginRight: 8 }} />
+                <FireFilled style={{ color: appColors?.GREEND, marginRight: 8 }} />
                 Core Technologies
               </Title>
               <Row gutter={[24, 24]}>
@@ -198,7 +195,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: PRIMARY_COLOR }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: appColors?.GREEND }} />
                     }
                   }
                   return (
@@ -225,7 +222,7 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <DatabaseFilled style={{ color: PRIMARY_COLOR, marginRight: 8 }} />
+                <DatabaseFilled style={{ color: appColors?.GREEND, marginRight: 8 }} />
                 Backend & Database
               </Title>
               <Row gutter={[24, 24]}>
@@ -240,7 +237,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: PRIMARY_COLOR }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: appColors?.GREEND }} />
                     }
                   }
                   return (
@@ -269,7 +266,7 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <ToolFilled style={{ color: PRIMARY_COLOR, marginRight: 8 }} />
+                <ToolFilled style={{ color: appColors?.GREEND, marginRight: 8 }} />
                 Tools
               </Title>
               <Row gutter={[24, 24]}>
@@ -284,7 +281,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: PRIMARY_COLOR }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: appColors?.GREEND }} />
                     }
                   }
                   return (
@@ -313,7 +310,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Education
             </Title>
 
@@ -322,7 +319,7 @@ function Home() {
             >
               <Title level={4} style={{ marginTop: 0, color: 'white' }}>{university.name}</Title>
 
-              <Title level={4} style={{ color: PRIMARY_COLOR }}>{university.degree}</Title>
+              <Title level={4} style={{ color: appColors?.GREEND }}>{university.degree}</Title>
               <Text style={{ color: '#A6A6A6', display: 'block', marginBottom: 10 }}>{university.duration}</Text>
 
               <Text style={{ color: '#A6A6A6', display: 'block' }}>{university.description}</Text>
@@ -334,7 +331,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
           >
-            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Languages
             </Title>
 
@@ -344,7 +341,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: PRIMARY_COLOR }} />
+                    <GlobalOutlined style={{ fontSize: 32, color: appColors?.GREEND }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>Vietnamese</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Native Proficiency</Text>
@@ -359,7 +356,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: PRIMARY_COLOR }} />
+                    <GlobalOutlined style={{ fontSize: 32, color: appColors?.GREEND }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>English</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Professional Proficiency</Text>
@@ -376,7 +373,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
           >
-            <Title style={{ color: PRIMARY_COLOR, marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Certifications & Awards
             </Title>
 
@@ -386,7 +383,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align='center' gap={16}>
-                    <TrophyOutlined style={{ fontSize: 32, color: PRIMARY_COLOR }} />
+                    <TrophyOutlined style={{ fontSize: 32, color: appColors?.GREEND }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>TOEIC 545</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Educational Testing Service (ETS)</Text>
@@ -421,7 +418,7 @@ function Home() {
           </Space>
         </Flex>
 
-        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={PRIMARY_COLOR} />} switchIcon={<CloseOutlined />}>
+        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={appColors?.GREEND} />} switchIcon={<CloseOutlined />}>
           <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
           <FloatButton
             icon={<GithubOutlined />}

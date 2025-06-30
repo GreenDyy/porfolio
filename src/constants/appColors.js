@@ -12,9 +12,10 @@ export const appColors = {
     greenborder: '#97BE5A',
     link: '#5669FF',
     danger: '#DC143C',
-    bg_primary:'#EFF0FE',
+    bg_primary: '#EFF0FE',
     bgSquare: '#F7F5FA',
     yellow: '#FFB151',
     purple: '#6C15E5',
     water: '#1E90FF',
+    GREEND: '#40AF58'
 }

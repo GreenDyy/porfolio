@@ -31,18 +31,12 @@
 
     &.content-hidden {
         opacity: 0;
-        // background-color: white;
         pointer-events: none;
-        transform: translateY(20px);
-        transition: opacity 0.5s ease-in;
-        scale: 0.5;
     }
 
     &.content-visible {
         opacity: 1;
         pointer-events: auto;
-        transform: translateY(0);
-        scale: 1;
         transition: opacity 0.7s ease-in;
     }
 
