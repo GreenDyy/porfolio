@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './Home.scss'
-import { Button, Card, Col, Flex, Layout, Row, Space, Tag, Typography } from 'antd'
+import '../../styles/global-animations.scss'
+import { Button, Card, Col, Flex, FloatButton, Layout, Row, Space, Typography } from 'antd'
+import { useMediaQuery } from 'react-responsive';
 import { Footer, Header } from '../../components'
 import { blue, green } from '@ant-design/colors'
-import dayjs from 'dayjs'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import Phoenix from '../../models3d/Phoenix'
 import {
   GithubOutlined,
   FacebookOutlined,
@@ -18,85 +22,145 @@ import {
   DatabaseFilled,
   GlobalOutlined,
   TrophyOutlined,
-  TwitterOutlined
+  CloseOutlined,
+  MoreOutlined,
+  HeartTwoTone,
+  PlaySquareTwoTone,
+  PauseOutlined,
+  QqOutlined
 } from '@ant-design/icons'
 
 import { coreTechs, beAndDatabases, tools } from './initData'
 import { university } from './text'
-
+import { useNavigate } from 'react-router-dom'
+import PlaySong from '../../components/PlaySong/PlaySong'
+import { useBreakpoints } from '../../utilities/breakpoint'
+import Video from '../../components/Video/Video';
+import { PageLoader } from '../../components'
+import { appColors } from '../../constants/appColors'
 const { Title, Text, Link } = Typography
 
-const handleColorExpericence = (experience) => {
-  const baseGreen = '#007c45';
-  switch (experience) {
-    case 'Expert':
-      return baseGreen;
-    case 'Advanced':
-      return '#19A974'; // Một tông xanh lá cây sáng hơn
-    case 'Intermediate':
-      return '#FFA500'; // Màu vàng nhạt, thể hiện mức độ trung bình
-    case 'Beginner':
-      return '#DC143C'; // Màu đỏ, thể hiện mức độ mới bắt đầu
-    default:
-      return '#808080'; // Màu xám cho trường hợp không xác định
-  }
-}
-
 function Home() {
+  const navigate = useNavigate()
   const [dataCoreTechs, setDataCoreTechs] = useState(coreTechs)
   const [dataBeAndDatabases, setDataBeAndDatabases] = useState(beAndDatabases)
   const [dataTools, setDataTools] = useState(tools)
+  const [isPlayingSong, setIsPlayingSong] = useState(false)
+  const [isRotating, setIsRotating] = useState(false)
+  const { isMobile, isTablet, isDesktop } = useBreakpoints()
+  const [showContent, setShowContent] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+  const timerRef = useRef(null);
+
+  const [showLines, setShowLines] = useState({
+    line1: false,
+    line2: false,
+    line3: false
+  });
+
+  const handlePlaySong = () => {
+    setIsPlayingSong(!isPlayingSong)
+  }
+
+  const startContentAnimation = () => {
+    setShowContent(true)
+    setShowLines((current) => ({
+      ...current,
+      line1: true
+    }))
+    setTimeout(() => {
+      setShowLines((current) => ({
+        ...current,
+        line2: true
+      }))
+    }, 200)
+    setTimeout(() => {
+      setShowLines((current) => ({
+        ...current,
+        line3: true
+      }))
+    }, 400)
+  }
+
+  const handleSkipLoader = () => {
+    // Clear timer nếu còn tồn tại
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+
+    // Set states để bỏ qua loader
+    setShowLoader(false)
+
+    // Bắt đầu animation content
+    startContentAnimation()
+  }
 
   useEffect(() => {
+    //set data
     setDataCoreTechs(coreTechs)
     setDataBeAndDatabases(beAndDatabases)
     setDataTools(tools)
+
+    //xử lý animation
+    const timer = setTimeout(() => {
+      setShowLoader(false)
+      setTimeout(() => {
+        startContentAnimation()
+      }, 300)
+    }, 2000)
+
+    timerRef.current = timer
+
+    return () => clearTimeout(timer)
   }, [])
 
+  if (showLoader) {
+    return <PageLoader onClick={handleSkipLoader} />
+  }
 
   return (
-    <Layout style={{ background: "black", color: "white", overflow: 'hidden' }}>
+    <Layout style={{ color: "white", overflow: 'hidden' }}>
       {/* <Header /> */}
 
-      <Layout.Content className='container' style={{
-
+      <Layout.Content className={`container ${showContent ? 'content-visible' : 'content-hidden'}`} style={{
         width: '100%',
         maxWidth: '100%'
       }}>
+        <PlaySong
+          src="/audios/TinhYeuDau.mp3"
+          hidden
+          isPlaying={isPlayingSong}
+          setIsPlaying={setIsPlayingSong}
+        />
         <Flex vertical justify='center' align='center'>
           {/* intro */}
           <Flex className='intro' vertical align='flex-start' style={{ maxWidth: 1200, textAlign: 'left' }}>
-            <Title style={{ color: green[6], fontSize: '68px', margin: 0, padding: 0 }} level={1}>
+            <Title className={`content-fade-in ${showLines.line1 ? 'is-visible' : ''}`} style={{ color: appColors?.GREEND, fontSize: '68px', margin: 0, padding: 0 }} level={1}>
               Hii!
             </Title>
-            <Title style={{ color: green[6] }}>
+            <Title className={`content-fade-in ${showLines.line2 ? 'is-visible' : ''}`} style={{ color: appColors?.GREEND, marginTop: 30 }}>
               {'My name is Huynh Khanh Duy (GreenD)'}
             </Title>
-            <Text style={{ color: 'white', fontSize: '24px', fontWeight: '500' }}>
+            <Text className={`content-fade-in ${showLines.line3 ? 'is-visible' : ''}`} style={{ color: 'white', fontSize: '24px', fontWeight: '500' }}>
               I'm a developer who likes to do different and cool things, learn from great people 😉. Oh, and I really like the color green!🍀
             </Text>
             {/* here */}
             <Space size={'large'} style={{ marginTop: 20 }}>
-              <Button
-                type="text"
-                icon={<GithubOutlined style={{ fontSize: '30px', color: green[6] }} />}
-              />
-              <Button
-                type="text"
-                icon={<FacebookOutlined style={{ fontSize: '30px', color: green[6] }} />}
-              />
-              <Button
-                type="text"
-                icon={<InstagramOutlined style={{ fontSize: '30px', color: green[6] }} />}
-              />
-              <Button
-                type="text"
-                icon={<LinkedinOutlined style={{ fontSize: '30px', color: green[6] }} />}
-              />
-              <Button
-                type="text"
-                icon={<YoutubeOutlined style={{ fontSize: '30px', color: green[6] }} />}
-              />
+              <Link href="https://github.com/GreenDyy" target="_blank">
+                <GithubOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
+              </Link>
+              <Link href="https://www.facebook.com/greendyy" target="_blank">
+                <FacebookOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
+              </Link>
+              <Link href="https://www.instagram.com/greendyy" target="_blank">
+                <InstagramOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
+              </Link>
+              <Link href="https://github.com/GreenDyy" target="_blank">
+                <LinkedinOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
+              </Link>
+              <Link href="https://www.youtube.com/channel/UCvmIHpWJ5HFjA3qqOIXaM7A" target="_blank">
+                <YoutubeOutlined style={{ fontSize: '30px', color: appColors?.GREEND }} />
+              </Link>
             </Space>
           </Flex>
 
@@ -105,7 +169,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Skills & Expertise
             </Title>
 
@@ -115,7 +179,7 @@ function Home() {
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
                 {/* <span style={{ color: green[6], marginRight: 10 }}>|</span> Core Technologies */}
-                <FireFilled style={{ color: green[6], marginRight: 8 }} />
+                <FireFilled style={{ color: appColors?.GREEND, marginRight: 8 }} />
                 Core Technologies
               </Title>
               <Row gutter={[24, 24]}>
@@ -131,7 +195,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: appColors?.GREEND }} />
                     }
                   }
                   return (
@@ -144,16 +208,7 @@ function Home() {
                           {icon}
                           <Flex vertical>
                             <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item.name}</Title>
-                            {/* <Text style={{ color: '#999' }}>{item.startDate ? (() => {
-                              const months = dayjs().diff(dayjs(item.startDate), 'month');
-                              if (months >= 12) {
-                                const years = Math.floor(months / 12);
-                                const remainingMonths = months % 12;
-                                return `${years} year${remainingMonths > 0 ? ` ${remainingMonths} month` : ''}`;
-                              }
-                              return `${months} month`;
-                            })() : 'No experience'}</Text> */}
-                            <Tag style={{ marginTop: 10 }} icon={<TwitterOutlined />} color={handleColorExpericence(item.experience)}>{item.experience}</Tag>
+                            <Text style={{ color: '#999' }}>{item.experience}</Text>
                           </Flex>
                         </Flex>
                       </Card>
@@ -167,7 +222,7 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <DatabaseFilled style={{ color: green[6], marginRight: 8 }} />
+                <DatabaseFilled style={{ color: appColors?.GREEND, marginRight: 8 }} />
                 Backend & Database
               </Title>
               <Row gutter={[24, 24]}>
@@ -182,7 +237,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: appColors?.GREEND }} />
                     }
                   }
                   return (
@@ -191,20 +246,13 @@ function Home() {
                         hoverable
                         className="card-custom"
                       >
-                        <Flex gap={20}>
+                        <Flex gap={20} align='center'>
                           {icon}
                           <Flex vertical>
                             <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item?.name}</Title>
-                            {/* <Text style={{ color: '#999' }}>{item.startDate ? (() => {
-                              const months = dayjs().diff(dayjs(item.startDate), 'month');
-                              if (months >= 12) {
-                                const years = Math.floor(months / 12);
-                                const remainingMonths = months % 12;
-                                return `${years} year${remainingMonths > 0 ? ` ${remainingMonths} month` : ''}`;
-                              }
-                              return `${months} month`;
-                            })() : 'No experience'}</Text> */}
-                            <Tag style={{ marginTop: 10 }} icon={<TwitterOutlined />} color={handleColorExpericence(item.experience)}>{item.experience}</Tag>
+                            <Text style={{ color: '#999' }}>{item.experience}</Text>
+
+                            {/* <Text style={{ color: '#999' }}>3 months</Text> */}
                           </Flex>
                         </Flex>
                       </Card>
@@ -218,8 +266,8 @@ function Home() {
               vertical
             >
               <Title level={2} style={{ color: 'white', marginBottom: 40, textAlign: 'left' }}>
-                <ToolFilled style={{ color: green[6], marginRight: 8 }} />
-                Tools & DevOps
+                <ToolFilled style={{ color: appColors?.GREEND, marginRight: 8 }} />
+                Tools
               </Title>
               <Row gutter={[24, 24]}>
                 {dataTools?.map((item, index) => {
@@ -233,7 +281,7 @@ function Home() {
                       icon = item.icon
                     }
                     else {
-                      icon = <GithubOutlined style={{ fontSize: 40, color: green[6] }} />
+                      icon = <GithubOutlined style={{ fontSize: 40, color: appColors?.GREEND }} />
                     }
                   }
                   return (
@@ -242,20 +290,11 @@ function Home() {
                         hoverable
                         className="card-custom"
                       >
-                        <Flex gap={20}>
+                        <Flex gap={20} align='center'>
                           {icon}
                           <Flex vertical>
                             <Title level={4} style={{ color: 'white', margin: 0, fontWeight: 'bold' }}>{item?.name}</Title>
-                            {/* <Text style={{ color: '#999' }}>{item.startDate ? (() => {
-                              const months = dayjs().diff(dayjs(item.startDate), 'month');
-                              if (months >= 12) {
-                                const years = Math.floor(months / 12);
-                                const remainingMonths = months % 12;
-                                return `${years} year${remainingMonths > 0 ? ` ${remainingMonths} month` : ''}`;
-                              }
-                              return `${months} month`;
-                            })() : 'No experience'}</Text> */}
-                            <Tag style={{ marginTop: 10 }} icon={<TwitterOutlined />} color={handleColorExpericence(item.experience)}>{item.experience}</Tag>
+                            <Text style={{ color: '#999' }}>{item.experience}</Text>
                           </Flex>
                         </Flex>
                       </Card>
@@ -271,7 +310,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Education
             </Title>
 
@@ -280,7 +319,7 @@ function Home() {
             >
               <Title level={4} style={{ marginTop: 0, color: 'white' }}>{university.name}</Title>
 
-              <Title level={4} style={{ color: green[6] }}>{university.degree}</Title>
+              <Title level={4} style={{ color: appColors?.GREEND }}>{university.degree}</Title>
               <Text style={{ color: '#A6A6A6', display: 'block', marginBottom: 10 }}>{university.duration}</Text>
 
               <Text style={{ color: '#A6A6A6', display: 'block' }}>{university.description}</Text>
@@ -292,7 +331,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Languages
             </Title>
 
@@ -302,7 +341,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
+                    <GlobalOutlined style={{ fontSize: 32, color: appColors?.GREEND }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>Vietnamese</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Native Proficiency</Text>
@@ -317,7 +356,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align="center" gap={16}>
-                    <GlobalOutlined style={{ fontSize: 32, color: green[6] }} />
+                    <GlobalOutlined style={{ fontSize: 32, color: appColors?.GREEND }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>English</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Professional Proficiency</Text>
@@ -334,7 +373,7 @@ function Home() {
             vertical
             style={{ padding: "40px 20px", maxWidth: 1200, margin: '0 auto', width: '100%' }}
           >
-            <Title style={{ color: green[6], marginBottom: 40, textAlign: 'center' }}>
+            <Title style={{ color: appColors?.GREEND, marginBottom: 40, textAlign: 'center' }}>
               Certifications & Awards
             </Title>
 
@@ -344,7 +383,7 @@ function Home() {
                   style={{ background: '#1e1e1e', border: '1px solid #333', width: '100%' }}
                 >
                   <Flex align='center' gap={16}>
-                    <TrophyOutlined style={{ fontSize: 32, color: green[6] }} />
+                    <TrophyOutlined style={{ fontSize: 32, color: appColors?.GREEND }} />
                     <Flex vertical align="flex-start" style={{ textAlign: 'left' }}>
                       <Title level={4} style={{ marginTop: 0, marginBottom: 8, color: 'white' }}>TOEIC 545</Title>
                       <Text style={{ color: '#A6A6A6', fontWeight: 'bold' }}>Educational Testing Service (ETS)</Text>
@@ -355,6 +394,13 @@ function Home() {
               </Col>
             </Row>
           </Flex>
+
+          {/* embed video */}
+          <Video
+            // title="AI LỚN CŨNG PHẢI"
+            description="Có thể chìm nhưng không thể ngã"
+          // src="https://www.youtube.com/embed/zlaEpHztvj0"
+          />
 
           <Space style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '40px 0' }}>
             <Link href="https://github.com/GreenDyy" target="_blank">
@@ -370,8 +416,36 @@ function Home() {
               <YoutubeOutlined style={{ fontSize: 32, color: '#A6A6A6', transition: 'color 0.3s' }} className="social-icon" />
             </Link>
           </Space>
-
         </Flex>
+
+        <FloatButton.Group trigger="click" icon={<HeartTwoTone twoToneColor={appColors?.GREEND} />} switchIcon={<CloseOutlined />}>
+          <FloatButton icon={isPlayingSong ? <PauseOutlined /> : <CustomerServiceFilled />} onClick={handlePlaySong} tooltip="Âm nhạc" />
+          <FloatButton
+            icon={<GithubOutlined />}
+            tooltip="Github"
+            onClick={() => { window.open('https://github.com/GreenDyy', '_blank', 'noopener') }}
+          />
+          {/* <FloatButton icon={<GlobalOutlined />} tooltip="Website" /> */}
+          <FloatButton icon={<QqOutlined />} tooltip="Vùng thử nghiệm 🤣" onClick={() => navigate('/test-area')} />
+        </FloatButton.Group>
+
+        {/*place 3d, đang bị chặn tương tác toàn vùng, cần fix*/}
+        {/* <div className='container-3d'>
+          <Canvas
+            camera={{ near: 0.1, far: 100, position: [0, 0, 10] }}
+            gl={{ preserveDrawingBuffer: true }}
+          >
+            <directionalLight position={[1, 1, 1]} intensity={2} />
+            <ambientLight intensity={4} />
+            <hemisphereLight intensity={1} groundColor="black" skyColor="green" />
+            <Phoenix
+              isRotating={isRotating}
+              setIsRotating={setIsRotating}
+              isPlayAction={false}
+              position={[-10, 0, 0]} // V
+            />
+          </Canvas>
+        </div> */}
       </Layout.Content>
 
       {/* <Footer /> */}
