@@ -6,6 +6,7 @@ import TestUpload from '../pages/Test/TestUpload';
 import TestDragAndDrop from '../pages/Test/TestDragAndDrop';
 import VideoTest from '../pages/Test/VideoTest';
 import TestAnimation from '../pages/Test/TestAnimation';
+import TestTraffic from '../pages/Test/TestTraffic/TestTraffic';
 
 export default function AppRoutes() {
     return (
@@ -25,6 +26,7 @@ export default function AppRoutes() {
             <Route path="/test-drag-and-drop" element={<TestDragAndDrop />} />
             <Route path="/test-video" element={<VideoTest />} />
             <Route path="/test-animation" element={<TestAnimation />} />
+            <Route path="/test-traffic" element={<TestTraffic />} />
         </Routes>
     );
 } 
