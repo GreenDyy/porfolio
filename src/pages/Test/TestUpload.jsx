@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Card, Flex, message, Typography } from 'antd'
-import { getAllProducts, createProduct } from '../../services/product.service'
+import { getAllProducts, createProduct } from '../../services/productService'
 
 const TestUpload = () => {
     const formRef = useRef(null)

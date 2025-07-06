@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Home, Test, Test2, TrySomethings } from '../pages';
+import { Home, Test, Test2, TrySomethings, Login, SignUp } from '../pages';
 import TestPromise from '../pages/Test/TestPromise';
 import TestUseContext from '../pages/Test/TestUseContext';
 import TestUpload from '../pages/Test/TestUpload';
@@ -29,6 +29,8 @@ export default function AppRoutes() {
             <Route path="/test-animation" element={<TestAnimation />} />
             <Route path="/test-traffic" element={<TestTraffic />} />
             <Route path="/test-cookie" element={<TestCookie />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
         </Routes>
     );
 } 
