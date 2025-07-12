@@ -7,7 +7,7 @@ import TestDragAndDrop from '../pages/Test/TestDragAndDrop';
 import VideoTest from '../pages/Test/VideoTest';
 import TestAnimation from '../pages/Test/TestAnimation';
 import TestTraffic from '../pages/Test/TestTraffic/TestTraffic';
-import TestCookie from '../pages/Test/TestCookie';
+import TestCountDown from '../pages/Test/TestCountDown';
 
 export default function AppRoutes() {
     return (
@@ -28,7 +28,7 @@ export default function AppRoutes() {
             <Route path="/test-video" element={<VideoTest />} />
             <Route path="/test-animation" element={<TestAnimation />} />
             <Route path="/test-traffic" element={<TestTraffic />} />
-            <Route path="/test-cookie" element={<TestCookie />} />
+            <Route path="/test-count-down" element={<TestCountDown />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
         </Routes>
