@@ -8,6 +8,7 @@ import VideoTest from '../pages/Test/VideoTest';
 import TestAnimation from '../pages/Test/TestAnimation';
 import TestTraffic from '../pages/Test/TestTraffic/TestTraffic';
 import TestCountDown from '../pages/Test/TestCountDown';
+import TestFormTemplate from '../pages/Test/TestTraffic/TestFormTemplate';
 
 export default function AppRoutes() {
     return (
@@ -31,6 +32,7 @@ export default function AppRoutes() {
             <Route path="/test-count-down" element={<TestCountDown />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/test-form-template" element={<TestFormTemplate />} />
         </Routes>
     );
 } 
